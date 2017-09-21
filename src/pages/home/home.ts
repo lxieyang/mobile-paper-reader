@@ -4,6 +4,7 @@ import { NavController, AlertController } from 'ionic-angular';
 import { SettingsPage } from './../settings/settings';
 import { PaperDetailPage } from './../paper-detail/paper-detail';
 import { Storage } from '@ionic/storage';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @Component({
   selector: 'page-home',
@@ -17,8 +18,33 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public storage: Storage
+    public storage: Storage,
+    private clipboard: Clipboard
   ) {
+  }
+
+  // currently unused
+  pasteFromClipboard() {
+    this.clipboard.paste().then(
+      (resolve: string) => {
+         console.log(resolve);
+         this.paper_url = resolve;
+         let alert = this.alertCtrl.create({
+            title: 'Copied!',
+            buttons: ['Ok']
+          });
+          alert.present();
+       },
+       (reject: string) => {
+          console.log(reject);
+          let alert = this.alertCtrl.create({
+            title: 'Oops!',
+            subTitle: 'Your clipboard seems EMPTY!',
+            buttons: ['Got it!']
+          });
+          alert.present();
+       }
+     );
   }
 
   checkApiAndGoToPaperDetail() {
@@ -27,10 +53,13 @@ export class HomePage {
         if (key != null) {
           // go to view the paper
           this.api_key = key;
-          this.navCtrl.push(PaperDetailPage, {
-            paper_url : this.paper_url,
-            api_key: this.api_key
-          });
+          if (this.paper_url) {
+            this.navCtrl.push(PaperDetailPage, {
+              paper_url : this.paper_url,
+              api_key: this.api_key
+            });
+          }
+          
         } else {
           let alert = this.alertCtrl.create({
             title: 'API Key Missing!',

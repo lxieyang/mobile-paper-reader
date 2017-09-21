@@ -14,6 +14,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { AutoresizeDirective } from './autoresize';
+import { Clipboard } from '@ionic-native/clipboard';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { File } from '@ionic-native/file';
     HomePage,
     PaperDetailPage,
     SettingsPage,
-    AboutPage
+    AboutPage,
+    AutoresizeDirective
   ],
   imports: [
     HttpModule,
@@ -42,6 +45,7 @@ import { File } from '@ionic-native/file';
     StatusBar,
     SplashScreen,
     FileTransfer,
+    Clipboard,
     File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

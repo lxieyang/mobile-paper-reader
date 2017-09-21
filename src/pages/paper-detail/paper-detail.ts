@@ -107,19 +107,24 @@ export class PaperDetailPage {
         }
 
       }).catch(error => {
+        loader.dismiss();
         console.log("encode base64 failed");
+        this.error_msg = "Cannot read file!"
         console.log(error);
       });
 
     }, (error) => {
       // handle error
+      loader.dismiss();
       console.log("Download error: ");
+      this.error_msg = "Invalid paper url!"
       console.log(error);
     });
     
   }
 
   ionViewWillLeave() {
+    // remove the file when leaving
     this.file.removeFile(this.storage_directory, this.filename);
   }
 
