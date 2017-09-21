@@ -10,13 +10,17 @@
 <ion-content padding>
   <h4>Please input the url of the paper you want to read:</h4>
 
+  <ion-list>
+      
+    <ion-item>
+      <ion-label floating>Paper (PDF) URL:</ion-label>
+      <ion-input type="text" [(ngModel)]="paper_url" class="selectable"></ion-input>
+    </ion-item>
   
-  <ion-input type="text" [(ngModel)]="paper_url" placeholder="Paper URL" class="selectable"></ion-input>
+  </ion-list>
   
-  
-  <hr>
 
   <br><br><br>
 
-  <button ion-button secondary block (click)="goToPaperDetailPage()">Read !</button>
+  <button ion-button secondary block (click)="checkApiAndGoToPaperDetail()">Read !</button>
 </ion-content>

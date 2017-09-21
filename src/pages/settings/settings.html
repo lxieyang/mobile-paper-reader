@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="md-key"></ion-icon> &nbsp;
+      API Key
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input type="text" [(ngModel)]="api_key" class="selectable" placeholder="API Key for indico"></ion-input>
+      <button ion-button secondary block (click)="setApiKey()">Set API Key</button>
+
+      <button ion-button secondary block (click)="removeApiKey()" color="danger" outline>Remove API Key</button>
+      <br>
+      <p>You can get the API key at: <a href="https://indico.io/dashboard/">https://indico.io/dashboard/</a></p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
