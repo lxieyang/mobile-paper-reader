@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <!-- error message -->
+  <ion-card *ngIf="error_msg">
+    <ion-card-header>
+      Sorry!
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{ error_msg }}
+    </ion-card-content>   
+  </ion-card>
+  
+  <div class="paper-content selectable">
+    {{ paper_text }}
+  </div>
+
+</ion-content>

@@ -8,11 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <h4>Please input the url of the paper you want to read:</h4>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  
+  <ion-input type="text" [(ngModel)]="paper_url" placeholder="Paper URL" class="selectable"></ion-input>
+  
+  
+  <hr>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <button ion-button secondary block (click)="goToPaperDetailPage()">Read !</button>
 </ion-content>
