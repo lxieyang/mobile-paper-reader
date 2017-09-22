@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the PaperDetailPage page.
@@ -34,8 +35,8 @@ export class PaperDetailPage {
   pdf_prefix = "data:application/pdf;base64,";
 
   // visual effect
-  font_size: number = 13;  // default: 1.3
-  background_choice = "white";
+  font_size: number;
+  background_choice: string;
 
   constructor(
     public navCtrl: NavController, 
@@ -45,6 +46,7 @@ export class PaperDetailPage {
     public http: Http,
     public platform: Platform,
     public file: File,
+    public storage: Storage,
     public transfer: FileTransfer
   ) {
     this.platform.ready().then(() => {
@@ -54,37 +56,22 @@ export class PaperDetailPage {
         this.storage_directory = this.file.dataDirectory;
       }
 
+      this.storage.ready().then(() => {
+        this.storage.get('font_size').then(font_size => {
+          this.font_size = font_size;
+        });
+        this.storage.get('bg_choice').then(bg_choice => {
+          this.background_choice = bg_choice;
+        });
+      });
+
       console.log("file stored at: " + this.storage_directory);
 
       this.paper_url = this.navParams.get("paper_url");
       this.api_key = this.navParams.get("api_key");
       this.pdfExtraction();  
-    })
+    });
     
-  }
-
-  increaseFontSize() {
-    if(this.font_size <= 19) {
-      this.font_size = this.font_size + 1;
-    }
-  }
-
-  decreaseFontSize() {
-    if(this.font_size >= 11) {
-      this.font_size = this.font_size - 1;
-    }
-  }
-
-  backgroundChangeToBlack() {
-    this.background_choice = "black";
-  }
-
-  backgroundChangeToWhite() {
-    this.background_choice = "white";
-  }
-
-  backgroundChangeToLightYellow() {
-    this.background_choice = "light-yellow";
   }
 
   pdfExtraction() {
@@ -155,5 +142,31 @@ export class PaperDetailPage {
     // remove the file when leaving
     this.file.removeFile(this.storage_directory, this.filename);
   }
+
+  // not permanent
+  increaseFontSize() {
+    if(this.font_size <= 19) {
+      this.font_size = this.font_size + 1;
+    }
+  }
+
+  decreaseFontSize() {
+    if(this.font_size >= 11) {
+      this.font_size = this.font_size - 1;
+    }
+  }
+
+  backgroundChangeToBlack() {
+    this.background_choice = "black";
+  }
+
+  backgroundChangeToWhite() {
+    this.background_choice = "white";
+  }
+
+  backgroundChangeToLightYellow() {
+    this.background_choice = "light-yellow";
+  }
+
 
 }

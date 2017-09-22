@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { AboutPage } from './../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
 import { GetApiTutorialPage } from './../pages/get-api-tutorial/get-api-tutorial';
+import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,11 +15,18 @@ import { GetApiTutorialPage } from './../pages/get-api-tutorial/get-api-tutorial
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  // rootPage: any = HomePage;
+
+  rootPage: any = SettingsPage;
 
   pages: Array<{title: string, component: any, icon: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen,
+    public storage: Storage
+  ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -34,6 +42,21 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+
+      // set default background and font-size
+      this.storage.ready().then(() => {
+        this.storage.get('font_size').then(font_size => {
+          if(!font_size) {
+            this.storage.set('font_size', 13);
+          }
+        });
+        this.storage.get('bg_choice').then(bg_choice => {
+          if(!bg_choice) {
+            this.storage.set('bg_choice', 'light-yellow');
+          }
+        });
+      })
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

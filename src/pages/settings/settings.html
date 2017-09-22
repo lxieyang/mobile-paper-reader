@@ -31,4 +31,36 @@
     </ion-card-content>
   </ion-card>
 
+
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="book"></ion-icon> &nbsp;
+      Reading
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Background</span>
+          <span style="float: right;">
+            <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
+            <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
+            <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
+          </span>
+        </ion-item>
+        <hr>
+        <ion-item>
+          <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Font size</span>
+          <span style="border-radius: 5px; background-color: lightgrey; padding: 5px 5px;; float: right;">{{ font_size }}</span>
+        </ion-item>
+        <ion-item>
+          <div style="float: left; font-size: 1.2em; padding: 10px 0 0 0">Font size</div><br>
+          <ion-range min="10" max="20" step="1" snaps="true" pin="true" color="dark" [(ngModel)]="font_size" (ionChange)="setFontSize()">
+            <ion-label range-left>10</ion-label>
+            <ion-label range-right>20</ion-label>
+          </ion-range>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

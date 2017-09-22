@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { GetApiTutorialPage } from './../get-api-tutorial/get-api-tutorial';
 
@@ -11,6 +11,10 @@ export class SettingsPage {
 
   api_key: string;
 
+  // reading
+  font_size: number;
+  background_choice: string;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -21,6 +25,8 @@ export class SettingsPage {
     // grad api key
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
+
+        // retrieve api key
         this.storage.get("api_key").then(key => {
           if(key == null) {
             console.log("No API KEY found!");
@@ -31,6 +37,20 @@ export class SettingsPage {
         }).catch(err => {
           console.log("storage error");
           console.log(err);
+        });
+
+        // retrieve background color
+        this.storage.get('bg_choice').then(bg_choice => {
+          if (bg_choice) {
+            this.background_choice = bg_choice;
+          } 
+        })
+
+        // retrieve font size
+        this.storage.get('font_size').then(font_size => {
+          if (font_size) {
+            this.font_size = font_size;
+          } 
         })
       })
 
@@ -69,6 +89,26 @@ export class SettingsPage {
 
   goToTutorialPage() {
     this.navCtrl.push(GetApiTutorialPage);
+  }
+
+  backgroundChangeToBlack() {
+    this.background_choice = "black";
+    this.storage.set('bg_choice', 'black');
+  }
+
+  backgroundChangeToWhite() {
+    this.background_choice = "white";
+    this.storage.set('bg_choice', 'white');
+  }
+
+  backgroundChangeToLightYellow() {
+    this.background_choice = "light-yellow";
+    this.storage.set('bg_choice', 'light-yellow');
+  }
+
+  setFontSize() {
+    // console.log("Change font size: " + this.font_size);
+    this.storage.set('font_size', this.font_size);
   }
 
 }
