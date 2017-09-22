@@ -7,9 +7,9 @@
     </span>
     
     <span style="float: right;">
-      <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 10px 15px;" round>B</button>
-      <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 10px 15px;" round>B</button>
-      <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 10px 15px;" round>B</button>
+      <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 10px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
+      <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 10px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
+      <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 10px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
     </span>
   </ion-navbar>
 

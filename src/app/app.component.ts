@@ -15,9 +15,7 @@ import { Storage } from '@ionic/storage';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // rootPage: any = HomePage;
-
-  rootPage: any = SettingsPage;
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any, icon: any}>;
 

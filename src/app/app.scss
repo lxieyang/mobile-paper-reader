@@ -90,3 +90,8 @@
     background-color: map-get($colors, light-yellow);
     color: rgba(8, 8, 8, 1);
 }
+
+.active-bg-choice {
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    border: 2px solid map-get($colors, cmu-red);
+}

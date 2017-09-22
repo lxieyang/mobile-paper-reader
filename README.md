@@ -1,26 +1,29 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Paper Reader on Mobile Phones
 
-## How to use this template
+<img width=50 src="preview/icon.png"/>
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Introduction
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+Ever experienced research reading papers on your phone? It sucked, right? The phone screens are just too small for those magnificant pdf documents people worked so hard to format.
 
-### With the Ionic CLI:
+With this app, you could just put in the link to the paper you want to read, wait a little while for the app to parse the pdf document using some advanced text extraction algorithms from [indico](indico.com), and then read the paper like you are reading a normal article on your phone screen. To illustrate, you just went from ***this***:
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+<img width=250 src="preview/reading-pdf.jpg" />
 
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start mySideMenu sidemenu
-```
+to **this**:
 
-Then, to run it, cd into `mySideMenu` and run:
+<img width=250 src="preview/reading-parsed-pdf.jpg" />
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
+And of course, it comes in with the ability to adjust the font size and the background:
 
-Substitute ios for android if not on a Mac.
+<img width=200 src="preview/settings.png" />
 
+
+## Questions
+
+I appreciate any suggestions! If you want a particular feature, please feel free to create an issue, and I'll address it ASAP!
+
+
+## Author
+
+- [Xieyang (Michael) Liu](https://lxieyang.github.io)     [Ph.D. student @ Carnegie Mellon University]
