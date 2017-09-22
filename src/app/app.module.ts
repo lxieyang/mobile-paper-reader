@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { AboutPage } from './../pages/about/about';
 import { PaperDetailPage } from './../pages/paper-detail/paper-detail';
 import { SettingsPage } from '../pages/settings/settings';
+import { GetApiTutorialPage } from './../pages/get-api-tutorial/get-api-tutorial';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -25,6 +26,7 @@ import { Clipboard } from '@ionic-native/clipboard';
     PaperDetailPage,
     SettingsPage,
     AboutPage,
+    GetApiTutorialPage,
     AutoresizeDirective
   ],
   imports: [
@@ -39,7 +41,8 @@ import { Clipboard } from '@ionic-native/clipboard';
     HomePage,
     PaperDetailPage,
     SettingsPage,
-    AboutPage
+    AboutPage,
+    GetApiTutorialPage
   ],
   providers: [
     StatusBar,

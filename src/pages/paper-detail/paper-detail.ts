@@ -87,8 +87,6 @@ export class PaperDetailPage {
     this.background_choice = "light-yellow";
   }
 
-
-
   pdfExtraction() {
     let loader = this.loadingCtrl.create({
       content: "Please wait for your paper to be parsed..."

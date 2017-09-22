@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+import { GetApiTutorialPage } from './../get-api-tutorial/get-api-tutorial';
 
 @Component({
   selector: 'page-settings',
@@ -65,6 +65,10 @@ export class SettingsPage {
     });
     this.api_key = null;
     alert.present();
+  }
+
+  goToTutorialPage() {
+    this.navCtrl.push(GetApiTutorialPage);
   }
 
 }

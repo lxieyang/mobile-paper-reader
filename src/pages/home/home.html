@@ -7,25 +7,27 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h4>Please input the url of the paper you want to read:</h4>
+<ion-content>
+  <ion-card padding>
+    <h1>Please input the url of the paper you want to read:</h1>
       
-  <ion-item>
-    <ion-textarea autoresize="150" type="text" [(ngModel)]="paper_url" class="selectable" placeholder="Paper (PDF) URL"></ion-textarea>
-  </ion-item>
-  
+    <ion-item>
+      <ion-textarea autoresize="150" type="text" [(ngModel)]="paper_url" class="selectable" placeholder="Paper (PDF) URL"></ion-textarea>
+    </ion-item>
+    
 
-  <br><br>
+    <br><br>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col col-12>
-        <button ion-button block (click)="checkApiAndGoToPaperDetail()">
-          <ion-icon name="glasses"></ion-icon>&nbsp; Read
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button block (click)="checkApiAndGoToPaperDetail()">
+            <ion-icon name="glasses"></ion-icon>&nbsp; Read
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 
 
 </ion-content>

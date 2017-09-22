@@ -20,7 +20,14 @@
 
       <button ion-button secondary block (click)="removeApiKey()" color="danger" outline>Remove API Key</button>
       <br>
-      <p>You can get the API key at: <a href="https://indico.io/dashboard/">https://indico.io/dashboard/</a></p>
+      <p>
+        <ion-icon name="link"></ion-icon>&nbsp;
+        You can get your API key at: <a href="https://indico.io/dashboard/">https://indico.io/dashboard/</a>
+      </p>
+      <p>
+        <ion-icon name="link"></ion-icon>&nbsp;
+        Tutorials on how to obtain an API key as a new user: <strong (click)="goToTutorialPage()">How to Get an API Key?</strong>
+      </p>
     </ion-card-content>
   </ion-card>
 
