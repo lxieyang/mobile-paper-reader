@@ -15,9 +15,6 @@ export class HomePage {
   paper_url: string;
   api_key: string;
 
-  // font_size: number = 15;
-  // background_choice = "white";
-
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
@@ -25,30 +22,6 @@ export class HomePage {
     private clipboard: Clipboard
   ) {
   }
-
-  // increaseFontSize() {
-  //   if(this.font_size <= 19) {
-  //     this.font_size = this.font_size + 1;
-  //   }
-  // }
-
-  // decreaseFontSize() {
-  //   if(this.font_size >= 11) {
-  //     this.font_size = this.font_size - 1;
-  //   }
-  // }
-
-  // backgroundChangeToBlack() {
-  //   this.background_choice = "black";
-  // }
-
-  // backgroundChangeToWhite() {
-  //   this.background_choice = "white";
-  // }
-
-  // backgroundChangeToLightYellow() {
-  //   this.background_choice = "light-yellow";
-  // }
 
   // currently unused
   pasteFromClipboard() {
