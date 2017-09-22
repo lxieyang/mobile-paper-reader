@@ -8,7 +8,42 @@
 </ion-header>
 
 <ion-content>
-  <ion-card padding>
+
+  <ion-card *ngIf="!api_key">
+    <ion-card-header color="cmu-red">
+      <h1>First time user? <br> Forget to set the API key?</h1>
+    </ion-card-header>
+      
+    <ion-card-content>
+      You need an <strong>indico</strong> API to use this app! Here's a tutorial on how to obtain an API key as a new user: <br>
+      <ion-icon name="link"></ion-icon>&nbsp;<strong (click)="goToTutorialPage()">How to Get an API Key?</strong> <br><br>
+      Make sure you come back to the home page to start reading! Have fun! 
+    </ion-card-content>
+  
+  </ion-card>
+
+  <ion-card padding *ngIf="!api_key">
+    <h1 style="color: rgb(166, 166, 166);">Please input the url of the paper you want to read:</h1>
+      
+    <ion-item>
+      <ion-textarea disabled autoresize="150" type="text" [(ngModel)]="paper_url" class="selectable" placeholder="Paper (PDF) URL"></ion-textarea>
+    </ion-item>
+    
+
+    <br><br>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button block disabled style="font-size: 1.3em;">
+            <ion-icon name="glasses"></ion-icon>&nbsp; Read
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+  <ion-card padding *ngIf="api_key">
     <h1>Please input the url of the paper you want to read:</h1>
       
     <ion-item>
@@ -21,7 +56,7 @@
     <ion-grid>
       <ion-row>
         <ion-col col-12>
-          <button ion-button block (click)="checkApiAndGoToPaperDetail()">
+          <button ion-button block (click)="checkApiAndGoToPaperDetail()" style="font-size: 1.3em;">
             <ion-icon name="glasses"></ion-icon>&nbsp; Read
           </button>
         </ion-col>

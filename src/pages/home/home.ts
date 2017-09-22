@@ -5,6 +5,7 @@ import { SettingsPage } from './../settings/settings';
 import { PaperDetailPage } from './../paper-detail/paper-detail';
 import { Storage } from '@ionic/storage';
 import { Clipboard } from '@ionic-native/clipboard';
+import { GetApiTutorialPage } from '../get-api-tutorial/get-api-tutorial';
 
 @Component({
   selector: 'page-home',
@@ -13,7 +14,7 @@ import { Clipboard } from '@ionic-native/clipboard';
 export class HomePage {
 
   paper_url: string;
-  api_key: string;
+  api_key: string = null;
 
   constructor(
     public navCtrl: NavController,
@@ -21,6 +22,14 @@ export class HomePage {
     public storage: Storage,
     private clipboard: Clipboard
   ) {
+    this.storage.ready().then(() => {
+      this.storage.get('api_key').then(key => {
+        if (key != null && key.length == 32) {
+          // valid key
+          this.api_key = key;
+        }
+      })
+    });
   }
 
   // currently unused
@@ -84,6 +93,10 @@ export class HomePage {
         }
       })
     });
+  }
+
+  goToTutorialPage() {
+    this.navCtrl.push(GetApiTutorialPage);
   }
 
 }
