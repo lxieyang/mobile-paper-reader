@@ -16,7 +16,12 @@ to **this**:
 
 And of course, it comes in with the ability to adjust the font size and the background:
 
-<img width="200" src="preview/settings.png" />
+<img width="250" src="preview/settings.png" />
+
+## Demo
+Here's a demo of how to basically use this app:
+
+<img width="250" src="preview/demo.gif" />
 
 
 ## Technologies
