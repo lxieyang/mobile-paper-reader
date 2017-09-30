@@ -22,6 +22,7 @@ export class PaperDetailPage {
   
   paper_url: string = "";
   paper_text: string = "";
+  is_from_storage: boolean;
   paper_metadata: any;
 
   pdf_extraction_api_endpoint: string = "https://apiv2.indico.io/pdfextraction";
@@ -69,6 +70,7 @@ export class PaperDetailPage {
 
       this.paper_url = this.navParams.get("paper_url");
       this.api_key = this.navParams.get("api_key");
+      this.is_from_storage = this.navParams.get("is_from_storage");
       this.pdfExtraction();  
     });
     
@@ -80,6 +82,19 @@ export class PaperDetailPage {
     });
     loader.present();
 
+    // in storage
+    if(this.is_from_storage) {
+      this.storage.get(this.paper_url).then(results => {
+        loader.dismiss();
+        this.paper_text = results.text;
+      }).catch(err => {
+        loader.dismiss();
+        this.error_msg = "Storage error!"
+      });
+      return;
+    }
+
+    // new document
     // download pdf to local file system
     const fileTransfer: FileTransferObject = this.transfer.create();
     fileTransfer.download(this.paper_url, this.storage_directory + '/' + this.filename).then((entry) => {
@@ -94,7 +109,7 @@ export class PaperDetailPage {
         if (!dataURL.startsWith(this.pdf_prefix)) {
           // not pdf file
           loader.dismiss();
-          this.error_msg = "Invalid PDF file!"
+          this.error_msg = "Invalid PDF file!";
         } else {
           // remove prefix and send request
           this.dataURL = dataURL.replace(this.pdf_prefix, "");
@@ -109,10 +124,26 @@ export class PaperDetailPage {
           this.http.post(this.pdf_extraction_api_endpoint, JSON.stringify(body))
             .map(res => res.json())
             .subscribe(databack => {
+              // successfully got the databack
               loader.dismiss();
               let results = databack.results;
-              this.paper_text = results.text;
+              
               console.log(databack.results.images);
+
+              // present the texts
+              this.paper_text = results.text;
+
+              // store the parsed results
+              this.storage.get('doc_count').then(count => {
+                if(count != null) {
+                  this.storage.set('doc_count', ++count);
+                } else {
+                  count = 1;
+                  this.storage.set('doc_count', count);
+                }
+                this.storage.set('doc_' + count, this.paper_url);
+                this.storage.set(this.paper_url, results);
+              })
             }, err => {
               loader.dismiss();
               console.log(err);
