@@ -1,66 +1,82 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+  <ion-navbar color="primary">
+    <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Settings</ion-title>
+    </button> -->
+    <ion-title text-center>Settings</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
+
+  <ion-list no-lines>
+    <ion-list-header>
       <ion-icon name="md-key"></ion-icon> &nbsp;
       API Key
-    </ion-card-header>
-    <ion-card-content>
-      <ion-input type="text" [(ngModel)]="api_key" class="selectable" placeholder="API Key for indico"></ion-input>
+    </ion-list-header>
+    <div padding>
+      <ion-input type="text" autofocus [(ngModel)]="api_key" class="selectable" placeholder="API Key for indico"></ion-input>
       <button ion-button secondary block (click)="setApiKey()">Set API Key</button>
 
       <button ion-button secondary block (click)="removeApiKey()" color="danger" outline>Remove API Key</button>
       <br>
-      <p>
+      <p style="color:#666;">
         <ion-icon name="link"></ion-icon>&nbsp;
-        You can get your API key at: <a href="https://indico.io/dashboard/">https://indico.io/dashboard/</a>
+        You can get your API key at: <a (click)="openInAppBrowser('https://indico.io/dashboard/')">https://indico.io/dashboard/</a>
       </p>
-      <p>
+      <p style="color:#666;">
         <ion-icon name="link"></ion-icon>&nbsp;
         Tutorial on how to obtain an API key as a new user: <strong (click)="goToTutorialPage()">How to Get an API Key?</strong>
       </p>
-    </ion-card-content>
-  </ion-card>
+    </div>
+  </ion-list>
 
+  <ion-list no-lines>
+    <ion-list-header>
+        <ion-icon name="book"></ion-icon> &nbsp;
+        Reading
+    </ion-list-header>
+    <ion-item>
+      <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Background</span>
+      <span style="float: right;">
+        <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
+        <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
+        <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
+      </span>
+    </ion-item>
+    <ion-item>
+      <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Font size</span>
+      <span style="border-radius: 5px; background-color: lightgrey; padding: 5px 5px;; float: right;">{{ font_size }}</span>
+    </ion-item>
+    <ion-item>
+      <div style="float: left; font-size: 1.2em; padding: 10px 0 0 0">Font size</div><br>
+      <ion-range min="10" max="20" step="1" snaps="true" pin="true" color="dark" [(ngModel)]="font_size" (ionChange)="setFontSize()">
+        <ion-label range-left>10</ion-label>
+        <ion-label range-right>20</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-icon name="book"></ion-icon> &nbsp;
-      Reading
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Background</span>
-          <span style="float: right;">
-            <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
-            <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
-            <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
-          </span>
-        </ion-item>
-        <hr>
-        <ion-item>
-          <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Font size</span>
-          <span style="border-radius: 5px; background-color: lightgrey; padding: 5px 5px;; float: right;">{{ font_size }}</span>
-        </ion-item>
-        <ion-item>
-          <div style="float: left; font-size: 1.2em; padding: 10px 0 0 0">Font size</div><br>
-          <ion-range min="10" max="20" step="1" snaps="true" pin="true" color="dark" [(ngModel)]="font_size" (ionChange)="setFontSize()">
-            <ion-label range-left>10</ion-label>
-            <ion-label range-right>20</ion-label>
-          </ion-range>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-list no-lines>
+    <ion-list-header>
+        <ion-icon name="md-checkmark"></ion-icon> &nbsp;
+        Misc
+    </ion-list-header>
+    <ion-item (click)="clearHistory()">
+        Clear History
+    </ion-item>
+    <button ion-item (click)="goToAboutPage()">
+      About
+    </button>
+  </ion-list>
+
+  <div padding>
+    <p>Version 1.0.2</p>
+    <p>
+      Created by <a (click)="openInAppBrowser('https://lxieyang.github.io')"><strong>@lxieyang</strong></a>
+    </p>
+  </div>
+  
 
 </ion-content>

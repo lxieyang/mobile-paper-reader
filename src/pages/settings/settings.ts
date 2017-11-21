@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { GetApiTutorialPage } from './../get-api-tutorial/get-api-tutorial';
+import { AboutPage } from '../about/about';
 
 @Component({
   selector: 'page-settings',
@@ -20,7 +23,8 @@ export class SettingsPage {
     public navParams: NavParams,
     public storage: Storage,
     public platform: Platform,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private iab: InAppBrowser
   ) {
     // grad api key
     this.platform.ready().then(() => {
@@ -91,6 +95,14 @@ export class SettingsPage {
     this.navCtrl.push(GetApiTutorialPage);
   }
 
+  goToAboutPage() {
+    this.navCtrl.push(AboutPage);
+  }
+
+  openInAppBrowser(url) {
+    const browser = this.iab.create(url);
+  }
+
   backgroundChangeToBlack() {
     this.background_choice = "black";
     this.storage.set('bg_choice', 'black');
@@ -109,6 +121,39 @@ export class SettingsPage {
   setFontSize() {
     // console.log("Change font size: " + this.font_size);
     this.storage.set('font_size', this.font_size);
+  }
+
+  clearHistory() {
+    let alert = this.alertCtrl.create({
+      title: 'Are you sure you want to clear the history?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Go ahead!',
+          handler: data => {
+            this.storage.get('doc_count').then(count => {
+              if(count != null) {
+                this.storage.remove('doc_count');
+                for(let i = count; i >= 1; i--) {
+                  this.storage.remove('doc_' + i);
+                }
+              }
+            });
+            let alert2 = this.alertCtrl.create({
+              title: 'History cleared!',
+              buttons: ['Got it']
+            })
+            alert2.present();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

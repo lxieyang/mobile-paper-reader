@@ -1,16 +1,19 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+  <ion-navbar color="primary">
+    <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>About</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <h1>Updates:</h1>
+  <h4>Updates:</h4>
   <ul>
+    <li>
+      Nov 21, 2017: Tabbed view!
+    </li>
     <li>
       Sept 30, 2017: Now you are able to view recently visited documents without web requests.
     </li>
@@ -19,17 +22,17 @@
     </li>
   </ul>
   <hr>
-  <p>Version 1.0.1</p><br>
+  <p>Version 1.0.2</p><br>
   <p>
-    This app is powered by <a href="https://indico.io">indico.io</a>.
+    Powered by <a (click)="openInAppBrowser('https://indico.io')">indico.io</a>.
   </p>
 
   <p>
-    This app is developed with the <a href="https://ionicframework.com">Ionic Framework</a>. It's available both for <strong>iOS</strong> and <strong>Android</strong>.
+    Developed with the <a (click)="openInAppBrowser('https://ionicframework.com')">Ionic Framework</a>. It's available both for <strong>iOS</strong> and <strong>Android</strong>.
   </p>
 
   <p>
-    This app is made by <a href="https://lxieyang.github.io"><strong>Xieyang (Michael) Liu</strong></a> @ Carnegie Mellon University.
+    Created by <a (click)="openInAppBrowser('https://lxieyang.github.io')"><strong>Xieyang (Michael) Liu</strong></a> @ Carnegie Mellon University.
   </p>
 
 </ion-content>

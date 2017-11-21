@@ -5,6 +5,8 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
+$font-family-md-base: "Lato";
+// $font-family-ios-base: "Lato";
 
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
@@ -36,7 +38,7 @@ $app-direction: ltr;
 $colors: (
   // primary:    #488aff,
   // primary:    rgb(211, 0, 18),
-  primary:    rgb(35, 126, 212),
+  primary:    rgb(97, 155, 239),
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
@@ -51,6 +53,8 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
+$tabs-ios-tab-padding-top: 8px;
+$tabs-ios-tab-padding-bottom: 8px;
 
 
 
@@ -58,7 +62,8 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
+$tabs-md-tab-padding-top: 8px;
+$tabs-md-tab-padding-bottom: 8px;
 
 
 // App Windows Variables

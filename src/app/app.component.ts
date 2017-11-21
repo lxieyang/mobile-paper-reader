@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { AboutPage } from './../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
+import { TabsPage } from '../pages/tabs/tabs';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -14,7 +15,7 @@ import { Storage } from '@ionic/storage';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = TabsPage;
 
   pages: Array<{title: string, component: any, icon: any}>;
 
