@@ -6,7 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { AboutPage } from './../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
-import { GetApiTutorialPage } from './../pages/get-api-tutorial/get-api-tutorial';
 import { Storage } from '@ionic/storage';
 
 @Component({

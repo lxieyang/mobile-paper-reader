@@ -1,18 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
-import { Http, Headers } from '@angular/http';
+import { NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Storage } from '@ionic/storage';
-
-/**
- * Generated class for the PaperDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-paper-detail',

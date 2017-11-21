@@ -1,7 +1,8 @@
 {
   "name": "ionic-mobile-paper-reader",
-  "app_id": "",
+  "app_id": "0ee6dc0a",
   "type": "ionic-angular",
+  "defaultBrowser": "chrome",
   "integrations": {
     "cordova": {}
   }
