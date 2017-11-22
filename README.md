@@ -26,9 +26,21 @@ Here's a demo of how to basically use this app:
 
 ## News & Updates
 
-- Sept 30, 2017: Indico engineers agreed to make changes to their APIs in order to support better image extraction and presentation. Excited! Will try to incorporate this change as soon as the new features are pushed!
-- Sept 29, 2017: Now you are able to view recently-visited documents without additional web requests. It's all stored in the app!
-- Sept 18, 2017: App released! Excited!
+- Nov 21, 2017 (v1.0.3): 
+  - Updated the app to be **tab-based** instead of the original sidebar-based.
+  - Added a **history** tab showing all previously viewed documents, as well as ability to clear the history.
+  - Added preliminary paper title analysis and display support in the history tab for better identification.
+- Sept 30, 2017 (v1.0.2): Indico engineers agreed to make changes to their APIs in order to support better image extraction and presentation. Excited! Will try to incorporate this change as soon as the new features are pushed!
+- Sept 29, 2017 (v1.0.1): Now you are able to view recently-visited documents without additional web requests. It's all stored in the app!
+- Sept 18, 2017 (v1.0.0): App released! Excited!
+
+## Up-to-date Screenshots:
+
+<img width="200" src="preview/1.0.3-home.jpg" alt="1.0.3-home.jpg"/>
+
+<img width="200" src="preview/1.0.3-history.jpg" alt="1.0.3-history.jpg"/>
+
+<img width="200" src="preview/1.0.3-settings.jpg" alt="1.0.3-settings.jpg"/>
 
 ## Technologies
 
@@ -50,7 +62,6 @@ You want to follow these general steps to install the app to your device:
 
 ## Future work
 
-- I plan to add caching to the app, so that users would be able to revisit the recent documents he/she read without additional web requests. This saves both the time and the data.
 - I plan to add a tab that shows all the history documents that you visited.
 - I plan to better parse the text information to automatically extract ***title***, ***author***, ***subtitle*** information out. This will also lead to a better visual presentation of the text information.
 - I plan to work with [Indico](https://indico.io) engineers to extract images from pdf document, as the current implementation does not present images from the original document. 
