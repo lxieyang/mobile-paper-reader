@@ -67,8 +67,8 @@ export class HomePage {
           if(count - i >= this.recent_count) {
             break;
           }
-          this.storage.get('doc_' + i).then(url => {
-            this.urls.push(url);
+          this.storage.get('doc_' + i).then(urlObject => {
+            this.urls.push(urlObject);
           });
         }
       }

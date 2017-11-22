@@ -110,8 +110,8 @@ export class PaperDetailPage {
             api_key: this.api_key,
             data: this.dataURL,
             text: true,
-            images: true,
-            tables: true,
+            images: false,
+            tables: false,
             metadata: true
           }
           this.http.post(this.pdf_extraction_api_endpoint, JSON.stringify(body))
@@ -125,6 +125,7 @@ export class PaperDetailPage {
 
               // present the texts
               this.paper_text = results.text;
+              let paper_title = this.paper_text.substring(0, this.paper_text.indexOf('\n\n')).trim().replace('\n', ': ');
 
               // store the parsed results
               this.storage.get('doc_count').then(count => {
@@ -132,16 +133,24 @@ export class PaperDetailPage {
                   this.storage.get(this.paper_url.split("?")[0]).then((newResults) => {
                     if(newResults == null) {
                       this.storage.set('doc_count', ++count);
-                      this.storage.set('doc_' + count, this.paper_url.split("?")[0]);
+                      this.storage.set('doc_' + count, {
+                        url: this.paper_url.split("?")[0], 
+                        title: paper_title
+                      });
                       this.storage.set(this.paper_url.split("?")[0], results);
                     }
                   });                  
                 } else {
                   count = 1;
                   this.storage.set('doc_count', count);
-                  this.storage.set('doc_' + count, this.paper_url.split("?")[0]);
+                  this.storage.set('doc_' + count, {
+                    url: this.paper_url.split("?")[0], 
+                    title: paper_title
+                  });
                   this.storage.set(this.paper_url.split("?")[0], results);
                 }
+              }, e => {
+                console.log("storage error when trying to get doc_count", e);
               })
             }, err => {
               loader.dismiss();

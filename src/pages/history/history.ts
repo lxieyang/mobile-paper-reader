@@ -46,8 +46,8 @@ export class HistoryPage {
     this.storage.get('doc_count').then(count => {
       if(count != null) {
         for(let i = count; i >= 1; i--) {
-          this.storage.get('doc_' + i).then(url => {
-            this.urls.push(url);
+          this.storage.get('doc_' + i).then(urlObject => {
+            this.urls.push(urlObject);
           });
         }
       }

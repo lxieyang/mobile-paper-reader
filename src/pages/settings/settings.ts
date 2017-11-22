@@ -140,6 +140,9 @@ export class SettingsPage {
               if(count != null) {
                 this.storage.remove('doc_count');
                 for(let i = count; i >= 1; i--) {
+                  this.storage.get('doc_' + i).then((result) => {
+                    this.storage.remove(result.url);
+                  })
                   this.storage.remove('doc_' + i);
                 }
               }
