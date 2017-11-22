@@ -17,12 +17,18 @@ export class HomePage {
   api_key: string = null;
   urls: any;
 
+  recent_count = 3;
+
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public storage: Storage,
     private clipboard: Clipboard
   ) {
+    this.getAPI();
+  }
+
+  getAPI() {
     this.storage.ready().then(() => {
       // get API key
       this.storage.get('api_key').then(key => {
@@ -35,9 +41,12 @@ export class HomePage {
     });
   }
 
-  selectPaperUrl(url, is_from_storage) {
-    this.paper_url = url;
-    this.goToPaperDetail(is_from_storage);
+  selectPaperUrl(url) {
+    this.navCtrl.push(PaperDetailPage, {
+      paper_url : url,
+      api_key: this.api_key,
+      is_from_storage: true
+    });
   }
 
   goToPaperDetail(is_frome_storage) {
@@ -49,17 +58,21 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    this.getAPI();
     // get recent documents
     this.urls = [];
     this.storage.get('doc_count').then(count => {
       if(count != null) {
         for(let i = count; i >= 1; i--) {
+          if(count - i >= this.recent_count) {
+            break;
+          }
           this.storage.get('doc_' + i).then(url => {
             this.urls.push(url);
           });
         }
       }
-    })
+    });
   }
 
   // currently unused

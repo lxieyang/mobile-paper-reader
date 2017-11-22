@@ -16,7 +16,7 @@
       API Key
     </ion-list-header>
     <div padding>
-      <ion-input type="text" autofocus [(ngModel)]="api_key" class="selectable" placeholder="API Key for indico"></ion-input>
+      <ion-input type="text" [(ngModel)]="api_key" class="selectable" placeholder="API Key for indico"></ion-input>
       <button ion-button secondary block (click)="setApiKey()">Set API Key</button>
 
       <button ion-button secondary block (click)="removeApiKey()" color="danger" outline>Remove API Key</button>
@@ -63,9 +63,9 @@
         <ion-icon name="md-checkmark"></ion-icon> &nbsp;
         Misc
     </ion-list-header>
-    <ion-item (click)="clearHistory()">
-        Clear History
-    </ion-item>
+    <button ion-item (click)="clearHistory()" >
+      Clear History
+    </button>
     <button ion-item (click)="goToAboutPage()">
       About
     </button>

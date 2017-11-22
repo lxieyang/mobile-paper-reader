@@ -10,5 +10,12 @@
 
 
 <ion-content padding>
+  <div>
+    <ion-list>
+        <button ion-item *ngFor="let url of urls" text-wrap (click)="selectPaperUrl(url);">
+          {{ url }}
+        </button>
+    </ion-list>
+  </div>
 
 </ion-content>

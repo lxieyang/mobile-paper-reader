@@ -67,10 +67,10 @@
   <div padding>
     <h1>Recent:</h1>
     <ion-list>
-      <ion-item *ngFor="let url of urls" text-wrap (click)="selectPaperUrl(url, true);">
-        {{ url }}
-      </ion-item>
-  </ion-list>
+        <button ion-item *ngFor="let url of urls" text-wrap (click)="selectPaperUrl(url);">
+          {{ url }}
+        </button>
+    </ion-list>
   </div>
   
 </ion-content>

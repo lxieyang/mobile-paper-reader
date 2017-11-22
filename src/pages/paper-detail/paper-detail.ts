@@ -82,7 +82,7 @@ export class PaperDetailPage {
         this.paper_text = results.text;
       }).catch(err => {
         loader.dismiss();
-        this.error_msg = "Storage error!"
+        this.error_msg = "Storage error! | " + err;
       });
       return;
     }
@@ -121,7 +121,7 @@ export class PaperDetailPage {
               loader.dismiss();
               let results = databack.results;
               
-              console.log(databack.results.images);
+              // console.log(databack.results.images);
 
               // present the texts
               this.paper_text = results.text;
@@ -129,13 +129,19 @@ export class PaperDetailPage {
               // store the parsed results
               this.storage.get('doc_count').then(count => {
                 if(count != null) {
-                  this.storage.set('doc_count', ++count);
+                  this.storage.get(this.paper_url.split("?")[0]).then((newResults) => {
+                    if(newResults == null) {
+                      this.storage.set('doc_count', ++count);
+                      this.storage.set('doc_' + count, this.paper_url.split("?")[0]);
+                      this.storage.set(this.paper_url.split("?")[0], results);
+                    }
+                  });                  
                 } else {
                   count = 1;
                   this.storage.set('doc_count', count);
+                  this.storage.set('doc_' + count, this.paper_url.split("?")[0]);
+                  this.storage.set(this.paper_url.split("?")[0], results);
                 }
-                this.storage.set('doc_' + count, this.paper_url);
-                this.storage.set(this.paper_url, results);
               })
             }, err => {
               loader.dismiss();
@@ -145,11 +151,11 @@ export class PaperDetailPage {
             });
         }
 
-      }).catch(error => {
+      }).catch(e => {
         loader.dismiss();
         console.log("encode base64 failed");
         this.error_msg = "Cannot read file!"
-        console.log(error);
+        console.log(e);
       });
 
     }, (error) => {
@@ -164,7 +170,9 @@ export class PaperDetailPage {
 
   ionViewWillLeave() {
     // remove the file when leaving
-    this.file.removeFile(this.storage_directory, this.filename);
+    if(!this.is_from_storage) {
+      this.file.removeFile(this.storage_directory, this.filename);
+    }
   }
 
   // not permanent

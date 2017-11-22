@@ -20,7 +20,7 @@ export class AboutPage {
   }
 
   openInAppBrowser(url) {
-    const browser = this.iab.create(url);
+    this.iab.create(url);
   }
 
 }

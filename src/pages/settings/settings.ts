@@ -100,7 +100,7 @@ export class SettingsPage {
   }
 
   openInAppBrowser(url) {
-    const browser = this.iab.create(url);
+    this.iab.create(url);
   }
 
   backgroundChangeToBlack() {
