@@ -20,6 +20,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 import { AutoresizeDirective } from './autoresize';
 import { Clipboard } from '@ionic-native/clipboard';
+import { PaperDataProvider } from '../providers/paper-data/paper-data';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { Clipboard } from '@ionic-native/clipboard';
     Clipboard,
     InAppBrowser,
     File,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    PaperDataProvider
   ]
 })
 export class AppModule {}

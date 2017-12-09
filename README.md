@@ -26,6 +26,7 @@ Here's a demo of how to basically use this app:
 
 ## News & Updates
 
+- Dec 8, 2017 (v1.0.4): Add ***paste from clipboard*** support.
 - Nov 21, 2017 (v1.0.3): 
   - Updated the app to be **tab-based** instead of the original sidebar-based.
   - Added a **history** tab showing all previously viewed documents, as well as ability to clear the history.
@@ -36,11 +37,11 @@ Here's a demo of how to basically use this app:
 
 ## Up-to-date Screenshots:
 
-<img width="200" src="preview/1.0.3-home.jpg" alt="1.0.3-home.jpg"/>
+<img width="200" src="preview/1.0.4-home.jpg" alt="1.0.3-home.jpg"/>
 
-<img width="200" src="preview/1.0.3-history.jpg" alt="1.0.3-history.jpg"/>
+<img width="200" src="preview/1.0.4-history.jpg" alt="1.0.3-history.jpg"/>
 
-<img width="200" src="preview/1.0.3-settings.jpg" alt="1.0.3-settings.jpg"/>
+<img width="200" src="preview/1.0.4-settings.jpg" alt="1.0.3-settings.jpg"/>
 
 ## Technologies
 

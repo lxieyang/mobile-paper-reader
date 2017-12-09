@@ -23,28 +23,8 @@
   </ion-card>
 
   <ion-card padding *ngIf="!api_key">
-    <h1 style="color: rgb(166, 166, 166);">Please input the url of the paper you want to read:</h1>
-      
-    <ion-item>
-      <ion-textarea disabled autoresize="150" type="text" [(ngModel)]="paper_url" class="selectable" placeholder="Paper (PDF) URL"></ion-textarea>
-    </ion-item>
-    
-
-    <br><br>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col col-12>
-          <button ion-button block disabled style="font-size: 1.3em;">
-            <ion-icon name="glasses"></ion-icon>&nbsp; Read
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  
-  <ion-card padding *ngIf="api_key">
-    <h1>Please input the url of the paper you want to read:</h1>
+    <h1>Enter paper link</h1>
+    <p>Please input the url of the paper you want to read:</p>
       
     <ion-item>
       <ion-textarea autoresize="150" type="text" [(ngModel)]="paper_url" class="selectable" placeholder="Paper (PDF) URL"></ion-textarea>
@@ -54,6 +34,52 @@
     <br><br>
 
     <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button block (click)="pasteFromClipboard()" small color="secondary">
+            <ion-icon name="clipboard"></ion-icon>&nbsp; Paste 
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button block (click)="pasteFromClipboard()" small color="danger">
+            <ion-icon name="clipboard"></ion-icon>&nbsp; clear
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button block (click)="checkApiAndGoToPaperDetail()" style="font-size: 1.3em;">
+            <ion-icon name="glasses"></ion-icon>&nbsp; Read
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+  <ion-card padding *ngIf="api_key">
+    <h1>Enter paper link</h1>
+    <p>Please input the url of the paper you want to read:</p>
+      
+    <ion-item>
+      <ion-textarea autoresize="150" type="text" [(ngModel)]="paper_url" class="selectable" placeholder="Paper (PDF) URL"></ion-textarea>
+    </ion-item>
+    
+
+    <br><br>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button block (click)="pasteFromClipboard()" small color="secondary">
+            <ion-icon name="clipboard"></ion-icon>&nbsp; Paste 
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button block (click)="clearInputBox()" small color="danger">
+            <ion-icon name="trash"></ion-icon>&nbsp; clear
+          </button>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col col-12>
           <button ion-button block (click)="checkApiAndGoToPaperDetail()" style="font-size: 1.3em;">
@@ -67,9 +93,9 @@
   <div padding>
     <h1>Recent:</h1>
     <ion-list>
-        <button ion-item *ngFor="let url of urls" text-wrap (click)="selectPaperUrl(url.url);">
-          {{ url.title }}
-        </button>
+      <button ion-item *ngFor="let url of urls" text-wrap (click)="selectPaperUrl(url.url);">
+        {{ url.title }}
+      </button>
     </ion-list>
   </div>
   

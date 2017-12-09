@@ -79,24 +79,29 @@ export class HomePage {
   pasteFromClipboard() {
     this.clipboard.paste().then(
       (resolve: string) => {
-         console.log(resolve);
-         this.paper_url = resolve;
-         let alert = this.alertCtrl.create({
-            title: 'Copied!',
-            buttons: ['Ok']
-          });
-          alert.present();
-       },
-       (reject: string) => {
-          console.log(reject);
-          let alert = this.alertCtrl.create({
-            title: 'Oops!',
-            subTitle: 'Your clipboard seems EMPTY!',
-            buttons: ['Got it!']
-          });
-          alert.present();
-       }
-     );
+        console.log(resolve);
+        this.paper_url = resolve;
+        if (!resolve) {
+          throw new Error('Clipboard empty');
+        }
+        // let alert = this.alertCtrl.create({
+        //   title: 'Copied!',
+        //   buttons: ['Ok']
+        // });
+        // alert.present();
+      }).catch((err) => {
+      console.log(err);
+      let alert = this.alertCtrl.create({
+        title: 'Oops!',
+        subTitle: 'Something went wrong! Could be your clip board\'s empty',
+        buttons: ['Got it!']
+      });
+      alert.present();
+      });
+  }
+
+  clearInputBox() {
+    this.paper_url = "";
   }
 
   checkApiAndGoToPaperDetail() {

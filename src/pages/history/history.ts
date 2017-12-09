@@ -40,7 +40,7 @@ export class HistoryPage {
     });
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     // get recent documents
     this.urls = [];
     this.storage.get('doc_count').then(count => {

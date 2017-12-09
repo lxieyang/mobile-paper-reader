@@ -8,6 +8,7 @@ import { AboutPage } from './../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Storage } from '@ionic/storage';
+import { PaperDataProvider } from '../providers/paper-data/paper-data';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +24,8 @@ export class MyApp {
     public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    public storage: Storage
+    public storage: Storage,
+    public paperData: PaperDataProvider
   ) {
     this.initializeApp();
 
@@ -57,6 +59,8 @@ export class MyApp {
 
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.paperData.init();
     });
   }
 
