@@ -180,7 +180,13 @@ export class PaperDetailPage {
   ionViewWillLeave() {
     // remove the file when leaving
     if(!this.is_from_storage) {
-      this.file.removeFile(this.storage_directory, this.filename);
+      this.file.removeFile(this.storage_directory, this.filename)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
