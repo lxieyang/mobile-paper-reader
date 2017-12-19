@@ -25,14 +25,37 @@ export class PaperDataProvider {
   getAllPapersInHistory() {
     let history_urls = [];
     this.storage.get('doc_count').then(count => {
+      let promises = [];
       if(count != null) {
         for(let i = count; i >= 1; i--) {
-          this.storage.get('doc_' + i).then(urlObject => {
+          promises.push(this.storage.get('doc_' + i).then(urlObject => {
             history_urls.push(JSON.parse(JSON.stringify(urlObject)));
-          });
+            return Promise.resolve;
+          }));
+        }
+      }
+      // notify all subscribers
+      Promise.all(promises).then(() => {
+        this.historyChanged.next(history_urls);
+      });
+    });
+  }
+
+  clearAllPapersInHistory() {
+    this.storage.get('doc_count').then(count => {
+      if(count != null) {
+        let promises = [];
+        promises.push(this.storage.remove('doc_count'));
+        for(let i = count; i >= 1; i--) {
+          this.storage.get('doc_' + i).then((result) => {
+            promises.push(this.storage.remove(result.url));
+          })
+          promises.push(this.storage.remove('doc_' + i));
         }
         // notify all subscribers
-        this.historyChanged.next(history_urls);
+        Promise.all(promises).then(() => {
+          this.getAllPapersInHistory();
+        });
       }
     });
   }

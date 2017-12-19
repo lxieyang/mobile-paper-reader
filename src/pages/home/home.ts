@@ -70,21 +70,6 @@ export class HomePage {
       this.urls = urls;
       console.log(this.urls);
     });
-
-    // get recent documents
-    // this.urls = [];
-    // this.storage.get('doc_count').then(count => {
-    //   if(count != null) {
-    //     for(let i = count; i >= 1; i--) {
-    //       if(count - i >= this.recent_count) {
-    //         break;
-    //       }
-    //       this.storage.get('doc_' + i).then(urlObject => {
-    //         this.urls.push(urlObject);
-    //       });
-    //     }
-    //   }
-    // });
   }
 
   ionViewWillLeave() {
@@ -101,11 +86,6 @@ export class HomePage {
         if (!resolve) {
           throw new Error('Clipboard empty');
         }
-        // let alert = this.alertCtrl.create({
-        //   title: 'Copied!',
-        //   buttons: ['Ok']
-        // });
-        // alert.present();
       }).catch((err) => {
       console.log(err);
       let alert = this.alertCtrl.create({

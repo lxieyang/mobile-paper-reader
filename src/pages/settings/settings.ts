@@ -5,6 +5,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { GetApiTutorialPage } from './../get-api-tutorial/get-api-tutorial';
 import { AboutPage } from '../about/about';
+import { PaperDataProvider } from '../../providers/paper-data/paper-data';
 
 @Component({
   selector: 'page-settings',
@@ -24,7 +25,8 @@ export class SettingsPage {
     public storage: Storage,
     public platform: Platform,
     public alertCtrl: AlertController,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private paperDataProvider: PaperDataProvider
   ) {
     // grad api key
     this.platform.ready().then(() => {
@@ -136,17 +138,7 @@ export class SettingsPage {
         {
           text: 'Go ahead!',
           handler: data => {
-            this.storage.get('doc_count').then(count => {
-              if(count != null) {
-                this.storage.remove('doc_count');
-                for(let i = count; i >= 1; i--) {
-                  this.storage.get('doc_' + i).then((result) => {
-                    this.storage.remove(result.url);
-                  })
-                  this.storage.remove('doc_' + i);
-                }
-              }
-            });
+            this.paperDataProvider.clearAllPapersInHistory();
             let alert2 = this.alertCtrl.create({
               title: 'History cleared!',
               buttons: ['Got it']

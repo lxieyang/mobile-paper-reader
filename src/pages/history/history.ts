@@ -50,18 +50,6 @@ export class HistoryPage {
       console.log('urls updated @history');
       this.urls = urls;
     });
-
-    // get recent documents
-    // this.urls = [];
-    // this.storage.get('doc_count').then(count => {
-    //   if(count != null) {
-    //     for(let i = count; i >= 1; i--) {
-    //       this.storage.get('doc_' + i).then(urlObject => {
-    //         this.urls.push(urlObject);
-    //       });
-    //     }
-    //   }
-    // });
   }
 
   ionViewWillLeave() {

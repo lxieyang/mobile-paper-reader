@@ -25,7 +25,7 @@ Here's a demo of how to basically use this app:
 
 
 ## News & Updates
-
+- Dec 19, 2017 (v1.0.5): Refactor code for better performance and UX when loading reading history. (Using ***Rx.ReplaySubject***)
 - Dec 8, 2017 (v1.0.4): Add ***paste from clipboard*** support.
 - Nov 21, 2017 (v1.0.3): 
   - Updated the app to be **tab-based** instead of the original sidebar-based.
