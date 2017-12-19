@@ -122,48 +122,14 @@ export class PaperDetailPage {
               // successfully got the databack
               loader.dismiss();
               let results = databack.results;
-              
-              // console.log(databack.results.images);
 
               // present the texts
               this.paper_text = results.text;
               let paper_title = this.paper_text.substring(0, this.paper_text.indexOf('\n\n')).trim().replace('\n', ': ');
 
               // store the parsed results
-              this.storage.get('doc_count').then(count => {
-                if(count != null) {
-                  this.storage.get(this.paper_url.split("?")[0]).then((newResults) => {
-                    if(newResults == null) {
-                      let p1 = this.storage.set('doc_count', ++count);
-                      let p2 = this.storage.set('doc_' + count, {
-                        url: this.paper_url.split("?")[0], 
-                        title: paper_title
-                      });
-                      let p3 = this.storage.set(this.paper_url.split("?")[0], results); 
+              this.paperDataProvider.storePaperContent(this.paper_url, paper_title, results);
 
-                      // refresh paper list
-                      Promise.all([p1, p2, p3]).then(() => {
-                        this.paperDataProvider.getAllPapersInHistory();
-                      });
-                    }
-                  });                  
-                } else {
-                  count = 1;
-                  let p1 = this.storage.set('doc_count', count);
-                  let p2 = this.storage.set('doc_' + count, {
-                    url: this.paper_url.split("?")[0], 
-                    title: paper_title
-                  });
-                  let p3 = this.storage.set(this.paper_url.split("?")[0], results);
-
-                  // refresh paper list
-                  Promise.all([p1, p2, p3]).then(() => {
-                    this.paperDataProvider.getAllPapersInHistory();
-                  });
-                }
-              }, e => {
-                console.log("storage error when trying to get doc_count", e);
-              })
             }, err => {
               loader.dismiss();
               console.log(err);
