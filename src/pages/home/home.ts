@@ -6,6 +6,8 @@ import { PaperDetailPage } from './../paper-detail/paper-detail';
 import { Storage } from '@ionic/storage';
 import { Clipboard } from '@ionic-native/clipboard';
 import { GetApiTutorialPage } from '../get-api-tutorial/get-api-tutorial';
+import { PaperDataProvider } from '../../providers/paper-data/paper-data';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'page-home',
@@ -16,6 +18,7 @@ export class HomePage {
   paper_url: string;
   api_key: string = null;
   urls: any;
+  urls_subscription: Subscription;
 
   recent_count = 3;
 
@@ -23,7 +26,8 @@ export class HomePage {
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public storage: Storage,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private paperDataProvider: PaperDataProvider
   ) {
     this.getAPI();
   }
@@ -57,22 +61,35 @@ export class HomePage {
     });
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     this.getAPI();
-    // get recent documents
-    this.urls = [];
-    this.storage.get('doc_count').then(count => {
-      if(count != null) {
-        for(let i = count; i >= 1; i--) {
-          if(count - i >= this.recent_count) {
-            break;
-          }
-          this.storage.get('doc_' + i).then(urlObject => {
-            this.urls.push(urlObject);
-          });
-        }
-      }
+
+    // use paperDataService to get all papers
+    this.urls_subscription = this.paperDataProvider.historyChanged.subscribe((urls: any[]) => {
+      console.log('urls updated @home');
+      this.urls = urls;
+      console.log(this.urls);
     });
+
+    // get recent documents
+    // this.urls = [];
+    // this.storage.get('doc_count').then(count => {
+    //   if(count != null) {
+    //     for(let i = count; i >= 1; i--) {
+    //       if(count - i >= this.recent_count) {
+    //         break;
+    //       }
+    //       this.storage.get('doc_' + i).then(urlObject => {
+    //         this.urls.push(urlObject);
+    //       });
+    //     }
+    //   }
+    // });
+  }
+
+  ionViewWillLeave() {
+    // simply don't unsubscribe
+    // this.urls_subscription.unsubscribe();
   }
 
   // currently unused

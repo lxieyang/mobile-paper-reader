@@ -3,11 +3,12 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Storage } from '@ionic/storage';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class PaperDataProvider {
 
-  history_urls: any;
+  historyChanged = new ReplaySubject<any[]>();
 
   constructor(
     public http: Http,
@@ -22,25 +23,18 @@ export class PaperDataProvider {
   }
 
   getAllPapersInHistory() {
+    let history_urls = [];
     this.storage.get('doc_count').then(count => {
       if(count != null) {
         for(let i = count; i >= 1; i--) {
           this.storage.get('doc_' + i).then(urlObject => {
-            this.history_urls.push(urlObject);
+            history_urls.push(JSON.parse(JSON.stringify(urlObject)));
           });
         }
+        // notify all subscribers
+        this.historyChanged.next(history_urls);
       }
     });
   }
-
-  getHistory(count: number) {   // if count == 0, return all
-    if (count) {
-      return this.history_urls.slice(0, count);
-    } else {
-      return this.history_urls;
-    }
-  }
-
-
 
 }

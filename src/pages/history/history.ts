@@ -4,6 +4,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { PaperDetailPage } from './../paper-detail/paper-detail';
 
 import { Storage } from '@ionic/storage';
+import { PaperDataProvider } from '../../providers/paper-data/paper-data';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'page-history',
@@ -14,11 +16,13 @@ export class HistoryPage {
   paper_url: string;
   api_key: string = null;
   urls: any;
+  urls_subscription: Subscription;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public storage: Storage
+    public storage: Storage,
+    private paperDataProvider: PaperDataProvider
   ) {
     this.storage.ready().then(() => {
       // get API key
@@ -40,22 +44,29 @@ export class HistoryPage {
     });
   }
 
-  ionViewWillEnter() {
-    // get recent documents
-    this.urls = [];
-    this.storage.get('doc_count').then(count => {
-      if(count != null) {
-        for(let i = count; i >= 1; i--) {
-          this.storage.get('doc_' + i).then(urlObject => {
-            this.urls.push(urlObject);
-          });
-        }
-      }
+  ionViewDidLoad() {
+    // use the provider
+    this.urls_subscription = this.paperDataProvider.historyChanged.subscribe((urls: any[]) => {
+      console.log('urls updated @history');
+      this.urls = urls;
     });
+
+    // get recent documents
+    // this.urls = [];
+    // this.storage.get('doc_count').then(count => {
+    //   if(count != null) {
+    //     for(let i = count; i >= 1; i--) {
+    //       this.storage.get('doc_' + i).then(urlObject => {
+    //         this.urls.push(urlObject);
+    //       });
+    //     }
+    //   }
+    // });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HistoryPage');
+  ionViewWillLeave() {
+    // simply don't unsubscribe
+    // this.urls_subscription.unsubscribe();
   }
 
 }

@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Storage } from '@ionic/storage';
+import { PaperDataProvider } from '../../providers/paper-data/paper-data';
 
 @Component({
   selector: 'page-paper-detail',
@@ -41,7 +42,8 @@ export class PaperDetailPage {
     public platform: Platform,
     public file: File,
     public storage: Storage,
-    public transfer: FileTransfer
+    public transfer: FileTransfer,
+    private paperDataProvider: PaperDataProvider
   ) {
     this.platform.ready().then(() => {
       if(this.platform.is('android')) {
@@ -96,7 +98,7 @@ export class PaperDetailPage {
 
       // base64 encode the pdf
       this.file.readAsDataURL(this.storage_directory, this.filename).then(dataURL => {
-        console.log(dataURL);
+        // console.log(dataURL);
         this.dataURL = dataURL;
 
         if (!dataURL.startsWith(this.pdf_prefix)) {
@@ -132,22 +134,32 @@ export class PaperDetailPage {
                 if(count != null) {
                   this.storage.get(this.paper_url.split("?")[0]).then((newResults) => {
                     if(newResults == null) {
-                      this.storage.set('doc_count', ++count);
-                      this.storage.set('doc_' + count, {
+                      let p1 = this.storage.set('doc_count', ++count);
+                      let p2 = this.storage.set('doc_' + count, {
                         url: this.paper_url.split("?")[0], 
                         title: paper_title
                       });
-                      this.storage.set(this.paper_url.split("?")[0], results);
+                      let p3 = this.storage.set(this.paper_url.split("?")[0], results); 
+
+                      // refresh paper list
+                      Promise.all([p1, p2, p3]).then(() => {
+                        this.paperDataProvider.getAllPapersInHistory();
+                      });
                     }
                   });                  
                 } else {
                   count = 1;
-                  this.storage.set('doc_count', count);
-                  this.storage.set('doc_' + count, {
+                  let p1 = this.storage.set('doc_count', count);
+                  let p2 = this.storage.set('doc_' + count, {
                     url: this.paper_url.split("?")[0], 
                     title: paper_title
                   });
-                  this.storage.set(this.paper_url.split("?")[0], results);
+                  let p3 = this.storage.set(this.paper_url.split("?")[0], results);
+
+                  // refresh paper list
+                  Promise.all([p1, p2, p3]).then(() => {
+                    this.paperDataProvider.getAllPapersInHistory();
+                  });
                 }
               }, e => {
                 console.log("storage error when trying to get doc_count", e);
