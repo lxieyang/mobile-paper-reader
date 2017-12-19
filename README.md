@@ -12,7 +12,7 @@ With this app, you could just put in the link to the paper you want to read, wai
 
 to **this**:
 
-<img width="250" src="preview/reading-parsed-pdf.jpg" />
+<img width="250" src="preview/reading-parsed-pdf.png" />
 
 And of course, it comes in with the ability to adjust the font size and the background:
 
@@ -25,7 +25,7 @@ Here's a demo of how to basically use this app:
 
 
 ## News & Updates
-- Dec 19, 2017 (v1.0.5): Refactor code for better performance and UX when loading reading history. (Using ***Rx.ReplaySubject***)
+- Dec 19, 2017 (v1.0.5): Refactor code for better performance and UX. (Using ***Rx.ReplaySubject***)
 - Dec 8, 2017 (v1.0.4): Add ***paste from clipboard*** support.
 - Nov 21, 2017 (v1.0.3): 
   - Updated the app to be **tab-based** instead of the original sidebar-based.
@@ -37,11 +37,7 @@ Here's a demo of how to basically use this app:
 
 ## Up-to-date Screenshots:
 
-<img width="200" src="preview/1.0.4-home.jpg" alt="1.0.3-home.jpg"/>
-
-<img width="200" src="preview/1.0.4-history.jpg" alt="1.0.3-history.jpg"/>
-
-<img width="200" src="preview/1.0.4-settings.jpg" alt="1.0.3-settings.jpg"/>
+<img width="250" src="preview/1.0.5-home.png" alt="home"/> <img width="250" src="preview/1.0.5-history.png" alt="history"/> <img width="250" src="preview/1.0.5-settings.png" alt="settings"/> <img width="250" src="preview/1.0.5-readingex.png" alt="reading experience"/> <img width="250" src="preview/1.0.5-clearhistory.png" alt="clear history"/>
 
 ## Technologies
 

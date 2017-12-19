@@ -8,6 +8,7 @@ import { Clipboard } from '@ionic-native/clipboard';
 import { GetApiTutorialPage } from '../get-api-tutorial/get-api-tutorial';
 import { PaperDataProvider } from '../../providers/paper-data/paper-data';
 import { Subscription } from 'rxjs/Subscription';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @Component({
   selector: 'page-home',
@@ -17,6 +18,7 @@ export class HomePage {
 
   paper_url: string;
   api_key: string = null;
+  api_key_subscription: Subscription;
   urls: any;
   urls_subscription: Subscription;
 
@@ -27,54 +29,44 @@ export class HomePage {
     public alertCtrl: AlertController,
     public storage: Storage,
     private clipboard: Clipboard,
-    private paperDataProvider: PaperDataProvider
+    private paperDataProvider: PaperDataProvider,
+    private userDataProvider: UserDataProvider
   ) {
-    this.getAPI();
-  }
-
-  getAPI() {
-    this.storage.ready().then(() => {
-      // get API key
-      this.storage.get('api_key').then(key => {
-        if (key != null && key.length == 32) {
-          // valid key
-          this.api_key = key;
-        }
-      });
-
-    });
-  }
-
-  selectPaperUrl(url) {
-    this.navCtrl.push(PaperDetailPage, {
-      paper_url : url,
-      api_key: this.api_key,
-      is_from_storage: true
-    });
-  }
-
-  goToPaperDetail(is_frome_storage) {
-    this.navCtrl.push(PaperDetailPage, {
-      paper_url : this.paper_url,
-      api_key: this.api_key,
-      is_from_storage: is_frome_storage
-    });
   }
 
   ionViewDidLoad() {
-    this.getAPI();
+    // update api key
+    this.api_key_subscription = this.userDataProvider.apiKeyChanged.subscribe((api_key: string) => {
+      this.api_key = api_key;
+    });
 
     // use paperDataService to get all papers
     this.urls_subscription = this.paperDataProvider.historyChanged.subscribe((urls: any[]) => {
       console.log('urls updated @home');
       this.urls = urls;
-      console.log(this.urls);
     });
   }
 
   ionViewWillLeave() {
     // simply don't unsubscribe
     // this.urls_subscription.unsubscribe();
+    // this.api_key_subscription.unsubscribe();
+  }
+
+  selectPaperUrl(url) {
+    this.readThisPaper(url, this.api_key, true);
+  }
+
+  goToPaperDetail(is_from_storage) {
+    this.readThisPaper(this.paper_url, this.api_key, is_from_storage);
+  }
+
+  readThisPaper(paper_url: string, api_key: string, is_from_storage: boolean) {
+    this.navCtrl.push(PaperDetailPage, {
+      paper_url,
+      api_key,
+      is_from_storage
+    });
   }
 
   // currently unused
@@ -102,39 +94,33 @@ export class HomePage {
   }
 
   checkApiAndGoToPaperDetail() {
-    this.storage.ready().then(() => {
-      this.storage.get('api_key').then(key => {
-        if (key != null) {
-          // go to view the paper
-          this.api_key = key;
-          if (this.paper_url) {
-            this.goToPaperDetail(false);
+    if (this.api_key != null) {
+      // go to view the paper
+      if (this.paper_url) {
+        this.goToPaperDetail(false);
+      }
+    } else {
+      let alert = this.alertCtrl.create({
+        title: 'API Key Missing!',
+        subTitle: 'Please go to the settings page to set your API key.',
+        buttons: [
+          {
+            text: 'Cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Ok, go now!',
+            handler: data => {
+              this.navCtrl.push(SettingsPage);
+              console.log('Ok clicked');
+            }
           }
-          
-        } else {
-          let alert = this.alertCtrl.create({
-            title: 'API Key Missing!',
-            subTitle: 'Please go to the settings page to set your API key.',
-            buttons: [
-              {
-                text: 'Cancel',
-                handler: data => {
-                  console.log('Cancel clicked');
-                }
-              },
-              {
-                text: 'Ok, go now!',
-                handler: data => {
-                  this.navCtrl.push(SettingsPage);
-                  console.log('Ok clicked');
-                }
-              }
-            ]
-          });
-          alert.present();
-        }
-      })
-    });
+        ]
+      });
+      alert.present();
+    }
   }
 
   goToTutorialPage() {

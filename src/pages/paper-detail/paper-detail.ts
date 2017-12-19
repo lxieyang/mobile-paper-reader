@@ -7,6 +7,7 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Storage } from '@ionic/storage';
 import { PaperDataProvider } from '../../providers/paper-data/paper-data';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @Component({
   selector: 'page-paper-detail',
@@ -19,7 +20,7 @@ export class PaperDetailPage {
   is_from_storage: boolean;
   paper_metadata: any;
 
-  pdf_extraction_api_endpoint: string = "https://apiv2.indico.io/pdfextraction";
+  pdf_extraction_api_endpoint: string = "";
   api_key: string;
 
   error_msg: any = "";
@@ -43,32 +44,24 @@ export class PaperDetailPage {
     public file: File,
     public storage: Storage,
     public transfer: FileTransfer,
-    private paperDataProvider: PaperDataProvider
+    private paperDataProvider: PaperDataProvider,
+    private userDataProvider: UserDataProvider
   ) {
-    this.platform.ready().then(() => {
-      if(this.platform.is('android')) {
-        this.storage_directory = this.file.externalDataDirectory;
-      } else {  // ios
-        this.storage_directory = this.file.dataDirectory;
-      }
+  }
 
-      this.storage.ready().then(() => {
-        this.storage.get('font_size').then(font_size => {
-          this.font_size = font_size;
-        });
-        this.storage.get('bg_choice').then(bg_choice => {
-          this.background_choice = bg_choice;
-        });
-      });
+  ionViewDidLoad() {
+    this.userDataProvider.storageLocationChanged.subscribe(storage_location => this.storage_directory = storage_location);
 
-      console.log("file stored at: " + this.storage_directory);
+    this.paper_url = this.navParams.get("paper_url");
+    this.api_key = this.navParams.get("api_key");
+    this.is_from_storage = this.navParams.get("is_from_storage");
 
-      this.paper_url = this.navParams.get("paper_url");
-      this.api_key = this.navParams.get("api_key");
-      this.is_from_storage = this.navParams.get("is_from_storage");
-      this.pdfExtraction();  
-    });
-    
+    this.userDataProvider.fontSizeChange.subscribe(font_size => this.font_size = font_size);
+    this.userDataProvider.backgroundChoiceChanged.subscribe(bg_choice => this.background_choice = bg_choice);
+
+    this.pdf_extraction_api_endpoint = this.userDataProvider.getPdfExtractionApiEndpoint();
+
+    this.pdfExtraction();  
   }
 
   pdfExtraction() {

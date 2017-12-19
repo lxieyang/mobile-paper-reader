@@ -40,9 +40,9 @@
     <ion-item>
       <span style="float: left; font-size: 1.1em; padding: 10px 0 0 0">Background</span>
       <span style="float: right;">
-        <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
-        <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
-        <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
+        <button ion-button color="light-yellow" (click)="changeBackgroundTo('light-yellow')" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
+        <button ion-button outline color="dark" (click)="changeBackgroundTo('white')" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
+        <button ion-button color="dark" (click)="changeBackgroundTo('black')" style="font-size: 1.0em; padding: 15px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
       </span>
     </ion-item>
     <ion-item>
@@ -72,7 +72,7 @@
   </ion-list>
 
   <div padding>
-    <p>Version 1.0.5</p>
+    <p>Version {{ app_version }}</p>
     <p>
       Created by <a (click)="openInAppBrowser('https://lxieyang.github.io')"><strong>@lxieyang</strong></a>
     </p>

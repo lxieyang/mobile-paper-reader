@@ -9,6 +9,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Storage } from '@ionic/storage';
 import { PaperDataProvider } from '../providers/paper-data/paper-data';
+import { UserDataProvider } from '../providers/user-data/user-data';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +26,8 @@ export class MyApp {
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
     public storage: Storage,
-    public paperData: PaperDataProvider
+    private paperData: PaperDataProvider,
+    private userDataProvider: UserDataProvider
   ) {
     this.initializeApp();
 
@@ -44,23 +46,11 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
       // set default background and font-size
-      this.storage.ready().then(() => {
-        this.storage.get('font_size').then(font_size => {
-          if(!font_size) {
-            this.storage.set('font_size', 13);
-          }
-        });
-        this.storage.get('bg_choice').then(bg_choice => {
-          if(!bg_choice) {
-            this.storage.set('bg_choice', 'light-yellow');
-          }
-        });
-      })
+      this.userDataProvider.setDefaultFontSize(13);
+      this.userDataProvider.setDefaultBackgroundChoice('light-yellow');
 
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      this.paperData.init();
     });
   }
 

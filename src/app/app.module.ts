@@ -21,6 +21,7 @@ import { File } from '@ionic-native/file';
 import { AutoresizeDirective } from './autoresize';
 import { Clipboard } from '@ionic-native/clipboard';
 import { PaperDataProvider } from '../providers/paper-data/paper-data';
+import { UserDataProvider } from '../providers/user-data/user-data';
 
 
 @NgModule({
@@ -38,7 +39,9 @@ import { PaperDataProvider } from '../providers/paper-data/paper-data';
   imports: [
     HttpModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      tabsHideOnSubPages: true
+    }),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -60,7 +63,8 @@ import { PaperDataProvider } from '../providers/paper-data/paper-data';
     InAppBrowser,
     File,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    PaperDataProvider
+    PaperDataProvider,
+    UserDataProvider
   ]
 })
 export class AppModule {}
