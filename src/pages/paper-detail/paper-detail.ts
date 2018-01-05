@@ -114,14 +114,15 @@ export class PaperDetailPage {
             .subscribe(databack => {
               // successfully got the databack
               loader.dismiss();
-              let results = databack.results;
+              let paper_content = databack.results;
 
               // present the texts
-              this.paper_text = results.text;
+              this.paper_text = paper_content.text;
               let paper_title = this.paper_text.substring(0, this.paper_text.indexOf('\n\n')).trim().replace('\n', ': ');
+              paper_content['title'] = paper_title;
 
               // store the parsed results
-              this.paperDataProvider.storePaperContent(this.paper_url, paper_title, results);
+              this.paperDataProvider.storePaperContent(this.paper_url, paper_content);
 
             }, err => {
               loader.dismiss();

@@ -22,36 +22,36 @@ export class PaperDataProvider {
     this.getAllPapersInHistory();
   }
 
-  storePaperContent(paper_url: string, paper_title: string, paper_content: any) {
+  storePaperContent(paper_url: string, paper_content: any) {
     // store the parsed results
-    this.storage.get('doc_count').then(count => {
-      if(count != null) {
-        this.storage.get(paper_url.split("?")[0]).then((newResults) => {
+    paper_url = paper_url.split("?")[0];  // sanitize paper_url
+
+    this.storage.get('docs').then(docs => {
+      if(docs != null) {
+        this.storage.get(paper_url).then((newResults) => {
           if(newResults == null) {
-            let p1 = this.storage.set('doc_count', ++count);
-            let p2 = this.storage.set('doc_' + count, {
-              url: paper_url.split("?")[0], 
-              title: paper_title
-            });
-            let p3 = this.storage.set(paper_url.split("?")[0], paper_content); 
+            docs.push(paper_url);
+            let promise_update_docs = this.storage.set('docs', docs);
+            let promise_update_paper_content = this.storage.set(paper_url, paper_content);
 
             // refresh paper list
-            Promise.all([p1, p2, p3]).then(() => {
+            Promise.all([
+              promise_update_docs, 
+              promise_update_paper_content
+            ]).then(() => {
               this.getAllPapersInHistory();
             });
           }
         });                  
       } else {  // first paper
-        count = 1;
-        let p1 = this.storage.set('doc_count', count);
-        let p2 = this.storage.set('doc_' + count, {
-          url: paper_url.split("?")[0], 
-          title: paper_title
-        });
-        let p3 = this.storage.set(paper_url.split("?")[0], paper_content);
-
+        let promise_update_docs = this.storage.set('docs', [paper_url]);
+        let promise_update_paper_content = this.storage.set(paper_url, paper_content);
+        
         // refresh paper list
-        Promise.all([p1, p2, p3]).then(() => {
+        Promise.all([
+          promise_update_docs, 
+          promise_update_paper_content
+        ]).then(() => {
           this.getAllPapersInHistory();
         });
       }
@@ -62,12 +62,20 @@ export class PaperDataProvider {
 
   getAllPapersInHistory() {
     let history_urls = [];
-    this.storage.get('doc_count').then(count => {
+    this.storage.get('docs').then(docs => {
       let promises = [];
-      if(count != null) {
-        for(let i = count; i >= 1; i--) {
-          promises.push(this.storage.get('doc_' + i).then(urlObject => {
-            history_urls.push(JSON.parse(JSON.stringify(urlObject)));
+      if(docs != null && docs.length != 0) {
+        for(let i = docs.length - 1; i >= 0; i--) {
+          promises.push(this.storage.get(docs[i]).then(paper_content => {
+            // {
+            //    url: paper_url
+            //    title: paper_title
+            //  }
+            let url_object = {
+              url: docs[i],
+              title: paper_content['title']
+            }
+            history_urls.push(JSON.parse(JSON.stringify(url_object)));
             return Promise.resolve;
           }));
         }
@@ -80,16 +88,14 @@ export class PaperDataProvider {
   }
 
   clearAllPapersInHistory() {
-    this.storage.get('doc_count').then(count => {
-      if(count != null) {
+    this.storage.get('docs').then(docs => {
+      if(docs != null) {
         let promises = [];
-        promises.push(this.storage.remove('doc_count'));
-        for(let i = count; i >= 1; i--) {
-          this.storage.get('doc_' + i).then((result) => {
-            promises.push(this.storage.remove(result.url));
-          })
-          promises.push(this.storage.remove('doc_' + i));
+        for(let i = 0; i < docs.length; i++) {
+          promises.push(this.storage.remove(docs[i]));
         }
+        promises.push(this.storage.remove('docs'));
+
         // notify all subscribers
         Promise.all(promises).then(() => {
           this.getAllPapersInHistory();

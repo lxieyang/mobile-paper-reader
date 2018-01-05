@@ -3,7 +3,7 @@
     <name>Paper Reader</name>
     <description>Michael's fun project</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Xieyang (Michael) Liu</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://128.237.195.20:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <feature name="CDVWKWebViewEngine">
@@ -84,6 +84,7 @@
     </platform>
     <allow-navigation href="http://10.0.0.55:8100" />
     <allow-navigation href="http://128.237.118.252:8100" />
+    <allow-navigation href="http://128.237.195.20:8100" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-clipboard" spec="^1.1.1" />
