@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ItemSliding } from 'ionic-angular';
 
 import { PaperDetailPage } from './../paper-detail/paper-detail';
 
@@ -21,6 +21,7 @@ export class HistoryPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    public alertCtrl: AlertController,
     public storage: Storage,
     private paperDataProvider: PaperDataProvider
   ) {
@@ -42,6 +43,28 @@ export class HistoryPage {
       api_key: this.api_key,
       is_from_storage: true
     });
+  }
+
+  deletePaper(url, slidingItem: ItemSliding) {
+    let alert = this.alertCtrl.create({
+      title: 'Please confirm:',
+      subTitle: 'Are you sure you want to delete this document from history?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            slidingItem.close();
+          }
+        },
+        {
+          text: 'Yes, delete it!',
+          handler: data => {
+            this.paperDataProvider.deleteThisPaperFromHistory(url);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   ionViewDidLoad() {

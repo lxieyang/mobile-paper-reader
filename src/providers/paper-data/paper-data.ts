@@ -104,4 +104,20 @@ export class PaperDataProvider {
     });
   }
 
+  deleteThisPaperFromHistory(paper_url: string) {
+    this.storage.get('docs').then(docs => {
+      docs.splice(docs.indexOf(paper_url), 1);  // remove it from the array
+      if (docs.length == 0) {
+        this.storage.remove('docs').then(() => {
+          this.getAllPapersInHistory();
+        });
+      } else {
+        this.storage.set('docs', docs).then(() => {
+          this.getAllPapersInHistory();
+        });
+      }
+    });
+    this.storage.remove(paper_url);
+  }
+
 }

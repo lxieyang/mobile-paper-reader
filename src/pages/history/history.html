@@ -12,9 +12,14 @@
 <ion-content padding>
   <div>
     <ion-list>
-        <button ion-item *ngFor="let url of urls" text-wrap (click)="selectPaperUrl(url.url);">
+      <ion-item-sliding *ngFor="let url of urls" #slidingItem>
+        <ion-item text-wrap (click)="selectPaperUrl(url.url);">
           {{ url.title }}
-        </button>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="deletePaper(url.url, slidingItem)">Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
   </div>
 

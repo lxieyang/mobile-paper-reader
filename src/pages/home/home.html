@@ -93,9 +93,14 @@
   <div padding>
     <h1>Recent:</h1>
     <ion-list>
-      <button ion-item *ngFor="let url of urls; let i = index" [ngClass]="{'dont-display': i >= recent_count}" text-wrap (click)="selectPaperUrl(url.url);">
-        {{ url.title }}
-      </button>
+      <ion-item-sliding *ngFor="let url of urls; let i = index" [ngClass]="{'dont-display': i >= recent_count}" #slidingItem>
+        <ion-item text-wrap (click)="selectPaperUrl(url.url);">
+          {{ url.title }}
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="deletePaper(url.url, slidingItem)">Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
   </div>
   
