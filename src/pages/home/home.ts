@@ -24,8 +24,11 @@ export class HomePage {
 
   recent_count = 3;
 
-  cleverdox_status: boolean;
-  platform: string;
+  cleverdox_status: boolean = null;
+  cleverdox_status_subscription: Subscription;
+
+  platform: string = null;
+  platform_subscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
@@ -42,10 +45,14 @@ export class HomePage {
     this.api_key_subscription = this.userDataProvider.apiKeyChanged.subscribe((api_key: string) => {
       this.api_key = api_key;
     });
-    this.userDataProvider.cleverdoxViewerStatusChanged.subscribe((status: boolean) => {
+
+    // update cleverdox status
+    this.cleverdox_status_subscription = this.userDataProvider.cleverdoxViewerStatusChanged.subscribe((status: boolean) => {
       this.cleverdox_status = status;
     });
-    this.userDataProvider.platformChanged.subscribe((platform) => {
+
+    // update platform
+    this.platform_subscription = this.userDataProvider.platformChanged.subscribe((platform) => {
       this.platform = platform;
     });
 
@@ -57,6 +64,7 @@ export class HomePage {
   }
 
   setCleverdoxStatus(status: boolean) {
+    console.log("setting cleverdox status");
     this.userDataProvider.setCleverdoxStatus(status);
   }
 
@@ -64,6 +72,8 @@ export class HomePage {
     // simply don't unsubscribe
     // this.urls_subscription.unsubscribe();
     // this.api_key_subscription.unsubscribe();
+    // this.cleverdox_status_subscription.unsubscribe();
+    // this.platform_subscription.unsubscribe();
   }
 
   selectPaperUrl(url) {

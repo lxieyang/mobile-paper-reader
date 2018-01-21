@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card *ngIf="!api_key">
+  <ion-card *ngIf="api_key != null && api_key == ''">
     <ion-card-header color="cmu-red">
       <h1>First time user? <br> Forget to set the API key?</h1>
     </ion-card-header>
@@ -21,7 +21,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="platform == 'android' && !cleverdox_status">
+  <ion-card *ngIf="platform != null && platform == 'android' && cleverdox_status != null && cleverdox_status == false">
       <ion-card-header color="cmu-red">
         <h1>Android User?</h1>
       </ion-card-header>
@@ -32,7 +32,7 @@
     
     </ion-card>
 
-  <ion-card padding *ngIf="!api_key">
+  <ion-card padding *ngIf="api_key != null && api_key == ''">
     <h1>Enter paper link</h1>
     <p>Please input the url of the paper you want to read:</p>
       
@@ -66,7 +66,7 @@
     </ion-grid>
   </ion-card>
   
-  <ion-card padding *ngIf="api_key">
+  <ion-card padding *ngIf="api_key != null && api_key != ''">
     <h1>Enter paper link</h1>
     <p>Please input the url of the paper you want to read:</p>
       
@@ -100,7 +100,7 @@
     </ion-grid>
   </ion-card>
 
-  <div padding>
+  <div padding *ngIf="api_key != null && api_key != ''">
     <h1>Recent:</h1>
     <ion-list>
       <ion-item-sliding *ngFor="let url of urls; let i = index" [ngClass]="{'dont-display': i >= recent_count}" #slidingItem>

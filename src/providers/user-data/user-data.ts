@@ -56,7 +56,7 @@ export class UserDataProvider {
           // valid key
           this.apiKeyChanged.next(key);
         } else {
-          this.apiKeyChanged.next(null);
+          this.apiKeyChanged.next('');
         }
       }).catch(err => {
         console.log("storage error");
@@ -100,7 +100,13 @@ export class UserDataProvider {
   getCleverdoxStatus() {
     this.storage.ready().then(() => {
       this.storage.get('cleverdox_status').then(status => {
-        this.cleverdoxViewerStatusChanged.next(status);
+        console.log("cleverdox status: ", status);
+        if (status == null) {
+          this.storage.set('cleverdox_status', false);
+          this.cleverdoxViewerStatusChanged.next(false);
+        } else {
+          this.cleverdoxViewerStatusChanged.next(status);
+        }
       })
     });
   }
@@ -108,6 +114,7 @@ export class UserDataProvider {
   setCleverdoxStatus(status: boolean) {
     this.storage.ready().then(() => {
       this.storage.set('cleverdox_status', status).then(() => {
+        console.log("cleverdox status set to: ", status);
         this.cleverdoxViewerStatusChanged.next(status);
       })
     });
