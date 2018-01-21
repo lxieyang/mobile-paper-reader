@@ -25,6 +25,8 @@ Here's a demo of how to basically use this app:
 
 
 ## News & Updates
+- Jan 21, 2018 (v1.0.7): Added support for viewing the original pdf document!
+- Jan 5, 2018 (v1.0.6): Added support for deleting individual document.
 - Dec 19, 2017 (v1.0.5): Refactor code for better performance and UX. (Using ***Rx.ReplaySubject***)
 - Dec 8, 2017 (v1.0.4): Add ***paste from clipboard*** support.
 - Nov 21, 2017 (v1.0.3): 
@@ -37,7 +39,7 @@ Here's a demo of how to basically use this app:
 
 ## Up-to-date Screenshots:
 
-<img width="250" src="preview/1.0.5-home.png" alt="home"/> <img width="250" src="preview/1.0.5-history.png" alt="history"/> <img width="250" src="preview/1.0.5-settings.png" alt="settings"/> <img width="250" src="preview/1.0.5-readingex.png" alt="reading experience"/> <img width="250" src="preview/1.0.5-clearhistory.png" alt="clear history"/>
+<img width="250" src="preview/app-home.png" alt="home"/> <img width="250" src="preview/app-history.png" alt="history"/> <img width="250" src="preview/app-settings.png" alt="settings"/> <img width="250" src="preview/app-readingex.png" alt="reading experience"/> <img width="250" src="preview/app-originaldoc.png" alt="reading experience"/> <img width="250" src="preview/app-clearhistory.png" alt="clear history"/>
 
 ## Technologies
 

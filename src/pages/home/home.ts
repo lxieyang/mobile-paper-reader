@@ -24,6 +24,9 @@ export class HomePage {
 
   recent_count = 3;
 
+  cleverdox_status: boolean;
+  platform: string;
+
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
@@ -39,12 +42,22 @@ export class HomePage {
     this.api_key_subscription = this.userDataProvider.apiKeyChanged.subscribe((api_key: string) => {
       this.api_key = api_key;
     });
+    this.userDataProvider.cleverdoxViewerStatusChanged.subscribe((status: boolean) => {
+      this.cleverdox_status = status;
+    });
+    this.userDataProvider.platformChanged.subscribe((platform) => {
+      this.platform = platform;
+    });
 
     // use paperDataService to get all papers
     this.urls_subscription = this.paperDataProvider.historyChanged.subscribe((urls: any[]) => {
       console.log('urls updated @home');
       this.urls = urls;
     });
+  }
+
+  setCleverdoxStatus(status: boolean) {
+    this.userDataProvider.setCleverdoxStatus(status);
   }
 
   ionViewWillLeave() {

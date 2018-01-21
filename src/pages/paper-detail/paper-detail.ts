@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { Storage } from '@ionic/storage';
 import { PaperDataProvider } from '../../providers/paper-data/paper-data';
 import { UserDataProvider } from '../../providers/user-data/user-data';
@@ -17,6 +18,7 @@ export class PaperDetailPage {
   
   paper_url: string = "";
   paper_text: string = "";
+  title: string = "";
   is_from_storage: boolean;
   paper_metadata: any;
 
@@ -26,7 +28,7 @@ export class PaperDetailPage {
   error_msg: any = "";
 
   storage_directory: any;
-  filename: string = "paper-to-read.pdf"
+  filename: string;
   dataURL: string;
   pdf_prefix = "data:application/pdf;base64,";
 
@@ -44,6 +46,7 @@ export class PaperDetailPage {
     public file: File,
     public storage: Storage,
     public transfer: FileTransfer,
+    private document: DocumentViewer,
     private paperDataProvider: PaperDataProvider,
     private userDataProvider: UserDataProvider
   ) {
@@ -56,7 +59,7 @@ export class PaperDetailPage {
     this.api_key = this.navParams.get("api_key");
     this.is_from_storage = this.navParams.get("is_from_storage");
 
-    this.userDataProvider.fontSizeChange.subscribe(font_size => this.font_size = font_size);
+    this.userDataProvider.fontSizeChanged.subscribe(font_size => this.font_size = font_size);
     this.userDataProvider.backgroundChoiceChanged.subscribe(bg_choice => this.background_choice = bg_choice);
 
     this.pdf_extraction_api_endpoint = this.userDataProvider.getPdfExtractionApiEndpoint();
@@ -72,9 +75,11 @@ export class PaperDetailPage {
 
     // in storage
     if(this.is_from_storage) {
-      this.storage.get(this.paper_url).then(results => {
+      this.storage.get(this.paper_url).then(paper_content => {
         loader.dismiss();
-        this.paper_text = results.text;
+        this.paper_text = paper_content.text;
+        this.filename = paper_content.filename;
+        this.title = paper_content.title;
       }).catch(err => {
         loader.dismiss();
         this.error_msg = "Storage error! | " + err;
@@ -85,6 +90,7 @@ export class PaperDetailPage {
     // new document
     // download pdf to local file system
     const fileTransfer: FileTransferObject = this.transfer.create();
+    this.filename = new Date().getTime().toString() + ".pdf";
     fileTransfer.download(this.paper_url, this.storage_directory + '/' + this.filename).then((entry) => {
       // download complete
       console.log('download complete: ' + entry.toURL());
@@ -118,8 +124,9 @@ export class PaperDetailPage {
 
               // present the texts
               this.paper_text = paper_content.text;
-              let paper_title = this.paper_text.substring(0, this.paper_text.indexOf('\n\n')).trim().replace('\n', ': ');
-              paper_content['title'] = paper_title;
+              this.title = this.paper_text.substring(0, this.paper_text.indexOf('\n\n')).trim().replace('\n', ': ');
+              paper_content['title'] = this.title;
+              paper_content['filename'] = this.filename;
 
               // store the parsed results
               this.paperDataProvider.storePaperContent(this.paper_url, paper_content);
@@ -150,16 +157,15 @@ export class PaperDetailPage {
   }
 
   ionViewWillLeave() {
-    // remove the file when leaving
-    if(!this.is_from_storage) {
-      this.file.removeFile(this.storage_directory, this.filename)
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+  }
+
+  viewOriginalDocument() {
+    const options: DocumentViewerOptions = {
+      title: this.title,
+      openWith: {enabled: true}
     }
+    this.document.viewDocument(this.storage_directory + '/' + this.filename, 'application/pdf', options)
   }
 
   // not permanent

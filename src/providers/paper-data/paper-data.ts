@@ -3,22 +3,29 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Storage } from '@ionic/storage';
+import { File } from '@ionic-native/file';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @Injectable()
 export class PaperDataProvider {
+
+  storage_directory: any;
 
   historyChanged = new ReplaySubject<any[]>();
 
   constructor(
     public http: Http,
-    public storage: Storage
+    public storage: Storage,
+    public file: File,
+    private userDataProvider: UserDataProvider
   ) {
     console.log('Hello PaperDataProvider Provider');
     this.init();
   }
 
   init() {
+    this.userDataProvider.storageLocationChanged.subscribe(storage_location => this.storage_directory = storage_location);
     this.getAllPapersInHistory();
   }
 
@@ -87,24 +94,8 @@ export class PaperDataProvider {
     });
   }
 
-  clearAllPapersInHistory() {
-    this.storage.get('docs').then(docs => {
-      if(docs != null) {
-        let promises = [];
-        for(let i = 0; i < docs.length; i++) {
-          promises.push(this.storage.remove(docs[i]));
-        }
-        promises.push(this.storage.remove('docs'));
-
-        // notify all subscribers
-        Promise.all(promises).then(() => {
-          this.getAllPapersInHistory();
-        });
-      }
-    });
-  }
-
   deleteThisPaperFromHistory(paper_url: string) {
+    // remove from 'docs' array
     this.storage.get('docs').then(docs => {
       docs.splice(docs.indexOf(paper_url), 1);  // remove it from the array
       if (docs.length == 0) {
@@ -117,7 +108,48 @@ export class PaperDataProvider {
         });
       }
     });
-    this.storage.remove(paper_url);
+
+    // remove actual pdf file
+    this.storage.get(paper_url).then((paper_content) => {
+      this.file.removeFile(this.storage_directory, paper_content['filename'])
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // remove record
+      this.storage.remove(paper_url);
+    });
+    
+  }
+  
+  clearAllPapersInHistory() {
+    this.storage.get('docs').then(docs => {
+      if(docs != null) {
+        let promises = [];
+        for(let i = 0; i < docs.length; i++) {
+          this.storage.get(docs[i]).then((paper_content) => {
+            this.file.removeFile(this.storage_directory, paper_content['filename'])
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          });
+          promises.push(this.storage.remove(docs[i]));
+          
+        }
+        promises.push(this.storage.remove('docs'));
+
+        // notify all subscribers
+        Promise.all(promises).then(() => {
+          this.getAllPapersInHistory();
+        });
+      }
+    });
   }
 
 }

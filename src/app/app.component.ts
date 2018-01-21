@@ -48,6 +48,7 @@ export class MyApp {
       // set default background and font-size
       this.userDataProvider.setDefaultFontSize(13);
       this.userDataProvider.setDefaultBackgroundChoice('light-yellow');
+      this.userDataProvider.setCleverdoxStatus(false);
 
       this.statusBar.styleDefault();
       this.splashScreen.hide();

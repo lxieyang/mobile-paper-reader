@@ -19,8 +19,18 @@
       <ion-icon name="link"></ion-icon>&nbsp;<strong (click)="goToTutorialPage()">How to Get an API Key?</strong> <br><br>
       Make sure you come back to the home page to start reading! Have fun! 
     </ion-card-content>
-  
   </ion-card>
+
+  <ion-card *ngIf="platform == 'android' && !cleverdox_status">
+      <ion-card-header color="cmu-red">
+        <h1>Android User?</h1>
+      </ion-card-header>
+        
+      <ion-card-content>
+        Please head over to your app store and install <strong><a href="market://details?id=de.sitewaerts.cleverdox.viewer" (click)="setCleverdoxStatus(true)">cleverdox Viewer</a></strong>. Then you'll be able to view original pdf documents.
+      </ion-card-content>
+    
+    </ion-card>
 
   <ion-card padding *ngIf="!api_key">
     <h1>Enter paper link</h1>

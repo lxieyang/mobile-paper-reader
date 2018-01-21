@@ -1,16 +1,10 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <!-- <span style="float: left;">
-      <button ion-button outline (click)="decreaseFontSize()" style="font-size: 1.0em; font-weight: bold; padding: 10px;" color="dark" round>A -</button>
-      <button ion-button outline (click)="increaseFontSize()" style="font-size: 1.0em; font-weight: bold; padding: 10px;" color="dark" round>A +</button>
-    </span>
+    <button ion-button float-right clear (click)="viewOriginalDocument()">
+      <ion-icon color="light" name="md-document"></ion-icon>
+    </button>
     
-    <span style="float: right;">
-      <button ion-button color="light-yellow" (click)="backgroundChangeToLightYellow()" style="font-size: 1.0em; padding: 10px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'light-yellow'}">B</button>
-      <button ion-button outline color="dark" (click)="backgroundChangeToWhite()" style="font-size: 1.0em; padding: 10px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'white'}">B</button>
-      <button ion-button color="dark" (click)="backgroundChangeToBlack()" style="font-size: 1.0em; padding: 10px 15px;" round [ngClass]="{'active-bg-choice' : background_choice == 'black'}">B</button>
-    </span> -->
   </ion-navbar>
 
 </ion-header>

@@ -8,10 +8,13 @@ import { APP_VERSION, PDF_EXTRACTION_API_ENDPOINT } from '../../config';
 
 @Injectable()
 export class UserDataProvider {
+
   apiKeyChanged = new ReplaySubject<any>();
   storageLocationChanged = new ReplaySubject<any>();
-  fontSizeChange = new ReplaySubject<any>();
+  fontSizeChanged = new ReplaySubject<any>();
   backgroundChoiceChanged = new ReplaySubject<any>();
+  cleverdoxViewerStatusChanged = new ReplaySubject<any>();
+  platformChanged = new ReplaySubject<any>();
 
   pdf_extraction_api_endpoint: string = PDF_EXTRACTION_API_ENDPOINT;
   
@@ -25,10 +28,24 @@ export class UserDataProvider {
   }
 
   init() {
-    this.getAPI();
+    this.getAPI();    
+    this.getPlatform();
     this.getStorageLocation();
     this.getFontSize();
     this.getBackgroundChoice();
+    this.getCleverdoxStatus();
+  }
+
+  getPlatform() {
+    this.platform.ready().then(() => {
+      if (this.platform.is('ios')) {
+        this.platformChanged.next('ios');
+      } else if (this.platform.is('android')) {
+        this.platformChanged.next('android');
+      } else {
+        this.platformChanged.next('others');
+      }
+    });
   }
 
   getAPI() {
@@ -67,7 +84,7 @@ export class UserDataProvider {
   getFontSize() {
     this.storage.ready().then(() => {
       this.storage.get('font_size').then(font_size => {
-        this.fontSizeChange.next(font_size);
+        this.fontSizeChanged.next(font_size);
       });
     });
   }
@@ -75,8 +92,24 @@ export class UserDataProvider {
   setFontSize(font_size: any) {
     this.storage.ready().then(() => {
       this.storage.set('font_size', font_size).then(() => {
-        this.fontSizeChange.next(font_size);
+        this.fontSizeChanged.next(font_size);
       });
+    });
+  }
+
+  getCleverdoxStatus() {
+    this.storage.ready().then(() => {
+      this.storage.get('cleverdox_status').then(status => {
+        this.cleverdoxViewerStatusChanged.next(status);
+      })
+    });
+  }
+
+  setCleverdoxStatus(status: boolean) {
+    this.storage.ready().then(() => {
+      this.storage.set('cleverdox_status', status).then(() => {
+        this.cleverdoxViewerStatusChanged.next(status);
+      })
     });
   }
 
@@ -85,7 +118,7 @@ export class UserDataProvider {
       this.storage.get('font_size').then(original_font_size => {
         if(!original_font_size) {
           this.storage.set('font_size', font_size).then(() => {
-            this.fontSizeChange.next(font_size);
+            this.fontSizeChanged.next(font_size);
           });
         }
       });

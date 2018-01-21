@@ -36,7 +36,7 @@ export class SettingsPage {
 
   ionViewDidLoad() {
     this.userDataProvider.apiKeyChanged.subscribe(api_key => this.api_key = api_key);
-    this.userDataProvider.fontSizeChange.subscribe(font_size => this.font_size = font_size);
+    this.userDataProvider.fontSizeChanged.subscribe(font_size => this.font_size = font_size);
     this.userDataProvider.backgroundChoiceChanged.subscribe(bg_choice => this.background_choice = bg_choice);
     this.app_version = this.userDataProvider.getAppVersion();
   }

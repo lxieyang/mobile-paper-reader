@@ -18,6 +18,7 @@ import { HttpModule } from '@angular/http';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
+import { DocumentViewer } from '@ionic-native/document-viewer';
 import { AutoresizeDirective } from './autoresize';
 import { Clipboard } from '@ionic-native/clipboard';
 import { PaperDataProvider } from '../providers/paper-data/paper-data';
@@ -59,6 +60,7 @@ import { UserDataProvider } from '../providers/user-data/user-data';
     StatusBar,
     SplashScreen,
     FileTransfer,
+    DocumentViewer,
     Clipboard,
     InAppBrowser,
     File,
